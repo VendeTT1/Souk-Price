@@ -1,0 +1,35 @@
+{
+  "app": { "title": "Souk Prices", "tagline": "What do things really cost near you? Prices shared by people like you." },
+  "nav": { "dashboard": "Overview", "search": "Search prices", "add": "Add a price" },
+  "common": {
+    "all": "All", "select": "Select…", "loading": "Loading…", "error": "Something went wrong. Please try again.",
+    "dh": "MAD", "perKg": "/ kg", "perUnit": "/ unit", "entries": "entries", "cities": "cities", "reset": "Reset filters"
+  },
+  "categories": {
+    "vegetables": "Vegetables", "fruits": "Fruits", "meat": "Meat", "fish": "Fish", "poultry": "Poultry", "eggs": "Eggs"
+  },
+  "marketTypes": { "souk": "Market (souk)", "street": "Street seller", "supermarket": "Supermarket", "shop": "Shop / butcher / fishmonger" },
+  "rating": { "label": "Price / quality", "1": "Bad", "2": "Neutral", "3": "Good", "avg": "Avg. satisfaction" },
+  "dashboard": {
+    "title": "Average prices, last 30 days",
+    "subtitle": "Items with enough contributions across users.",
+    "empty": "Not enough data yet. Items appear here once {{min}} or more prices are entered.",
+    "min": "min", "max": "max", "based": "Based on {{count}} entries in {{cities}} cities", "demo": "Demo mode: data is stored in your browser only."
+  },
+  "search": {
+    "title": "Search prices", "item": "Item", "anyItem": "Any item", "region": "Region", "city": "City",
+    "neighborhood": "Neighborhood", "market": "Market / seller name", "rating": "Satisfaction",
+    "results": "{{count}} results", "noResults": "No prices match these filters.",
+    "average": "Average of results", "colPlace": "Place", "colItem": "Item", "colPrice": "Price", "colRating": "Rating", "colDate": "Date", "colNote": "Note"
+  },
+  "form": {
+    "title": "Add a price you paid", "location": "Where", "product": "What", "feedback": "Your opinion",
+    "region": "Region", "city": "City", "neighborhood": "Neighborhood", "neighborhoodHint": "Pick a suggestion or type your own",
+    "marketType": "Type of place", "marketName": "Market or seller name", "marketNameHint": "e.g. Marjane, Marché Central, the vegetable cart on the corner",
+    "category": "Category", "item": "Item", "price": "Price (MAD)", "unit": "Unit", "kg": "per kg", "unitPiece": "per unit",
+    "comment": "Comment or seller recommendation (optional)", "commentHint": "Fresh produce, friendly seller, open until 9pm…",
+    "submit": "Submit price", "thanks": "Thank you! Your price was added.", "another": "Add another",
+    "errRequired": "Please fill this field", "errPrice": "Enter a valid price greater than 0", "errMax": "Price looks too high"
+  },
+  "footer": "Prices are contributed by users and may vary."
+}
