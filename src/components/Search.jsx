@@ -23,9 +23,10 @@ export default function Search({ version }) {
   const { t, i18n } = useTranslation();
   const lang = i18n.language;
   const [f, setF] = useState(EMPTY);
-  const [rows, setRows] = useState(null);
+  const [result, setResult] = useState(null); // { rows, total }
+  const [stats, setStats] = useState(null);
   const [error, setError] = useState(false);
-  const [page, setPage] = useState(1);
+  const [pageState, setPageState] = useState({ key: '', page: 1 });
 
   const set = (k) => (e) => setF((p) => ({ ...p, [k]: e.target.value }));
   const debounced = useDebounced(f);
@@ -38,24 +39,30 @@ export default function Search({ version }) {
 
   const cityOptions = f.region ? citiesOfRegion(f.region) : CITIES;
 
+  // page belongs to a set of filters: when the filters change, we are back on page 1
+  const filterKey = `${JSON.stringify(debounced)}|${version}`;
+  const page = pageState.key === filterKey ? pageState.page : 1;
+
   useEffect(() => {
     let alive = true;
-    setRows(null);
+    setResult(null);
     setError(false);
-    setPage(1);
-    store.listPrices(debounced)
-      .then((r) => alive && setRows(r))
+    store.listPrices(debounced, { page, pageSize: PAGE_SIZE })
+      .then((r) => alive && setResult(r))
       .catch(() => alive && setError(true));
     return () => { alive = false; };
-  }, [debounced, version]);
+  }, [debounced, page, version]);
 
-  // average only makes sense for one item and one unit
-  const avg = useMemo(() => {
-    if (!rows || !f.item || rows.length === 0) return null;
-    const unit = rows[0].unit;
-    const same = rows.filter((r) => r.unit === unit);
-    return { value: same.reduce((a, r) => a + Number(r.price), 0) / same.length, unit };
-  }, [rows, f.item]);
+  // average over ALL matches (not just the visible page); only meaningful for a single item
+  useEffect(() => {
+    let alive = true;
+    setStats(null);
+    if (!debounced.item) return undefined;
+    store.getStats(debounced)
+      .then((r) => alive && setStats(r))
+      .catch(() => alive && setStats(null));
+    return () => { alive = false; };
+  }, [debounced, version]);
 
   const unitLabel = (u) => (u === 'kg' ? t('common.perKg') : t('common.perUnit'));
 
@@ -116,20 +123,20 @@ export default function Search({ version }) {
       </div>
 
       {error && <p className="error">{t('common.error')}</p>}
-      {!rows && !error && <p className="muted">{t('common.loading')}</p>}
+      {!result && !error && <p className="muted">{t('common.loading')}</p>}
 
-      {rows && (
+      {result && (
         <>
           <div className="result-bar">
-            <strong>{t('search.results', { count: rows.length })}</strong>
-            {avg && (
+            <strong>{t('search.results', { count: result.total })}</strong>
+            {stats && (
               <span className="avg-pill">
-                {t('search.average')}: {formatPrice(avg.value, lang)} {t('common.dh')} {unitLabel(avg.unit)}
+                {t('search.average')}: {formatPrice(stats.avg_price, lang)} {t('common.dh')} {unitLabel(stats.unit)}
               </span>
             )}
           </div>
 
-          {rows.length === 0 ? (
+          {result.rows.length === 0 ? (
             <p className="empty">{t('search.noResults')}</p>
           ) : (
             <div className="table-wrap">
@@ -145,7 +152,7 @@ export default function Search({ version }) {
                   </tr>
                 </thead>
                 <tbody>
-                  {rows.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE).map((r) => (
+                  {result.rows.map((r) => (
                     <tr key={r.id}>
                       <td data-label={t('search.colItem')}>{itemName(r.item, lang)}</td>
                       <td data-label={t('search.colPrice')} className="num">
@@ -167,8 +174,8 @@ export default function Search({ version }) {
           <Pagination
             page={page}
             pageSize={PAGE_SIZE}
-            total={rows.length}
-            onChange={(p) => { setPage(p); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+            total={result.total}
+            onChange={(p) => { setPageState({ key: filterKey, page: p }); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
           />
         </>
       )}

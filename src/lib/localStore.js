@@ -58,6 +58,15 @@ function write(rows) {
 
 const has = (hay, needle) => String(hay).toLowerCase().includes(String(needle).toLowerCase());
 
+function filterRows(rows, { item, region, city, neighborhood, marketName, rating }) {
+  return rows.filter((r) => (!item || r.item === item)
+    && (!region || r.region === region)
+    && (!city || r.city === city)
+    && (!neighborhood || has(r.neighborhood, neighborhood))
+    && (!marketName || has(r.market_name, marketName))
+    && (!rating || r.rating === Number(rating)));
+}
+
 export const localStore = {
   name: 'local',
 
@@ -67,16 +76,23 @@ export const localStore = {
     write(rows);
   },
 
-  async listPrices({ item, region, city, neighborhood, marketName, rating } = {}) {
-    return read()
-      .filter((r) => (!item || r.item === item)
-        && (!region || r.region === region)
-        && (!city || r.city === city)
-        && (!neighborhood || has(r.neighborhood, neighborhood))
-        && (!marketName || has(r.market_name, marketName))
-        && (!rating || r.rating === Number(rating)))
-      .sort((a, b) => b.created_at.localeCompare(a.created_at))
-      .slice(0, 300);
+  async listPrices(filters = {}, { page = 1, pageSize = 10 } = {}) {
+    const all = filterRows(read(), filters).sort((a, b) => b.created_at.localeCompare(a.created_at));
+    return { rows: all.slice((page - 1) * pageSize, page * pageSize), total: all.length };
+  },
+
+  async getStats(filters = {}) {
+    const rows = filterRows(read(), filters);
+    if (!rows.length) return null;
+    // same rule as the SQL function: stats for the unit with the most entries
+    const byUnit = new Map();
+    rows.forEach((r) => byUnit.set(r.unit, [...(byUnit.get(r.unit) ?? []), Number(r.price)]));
+    const [unit, prices] = [...byUnit.entries()].sort((a, b) => b[1].length - a[1].length)[0];
+    return {
+      unit,
+      avg_price: Math.round((prices.reduce((x, y) => x + y, 0) / prices.length) * 100) / 100,
+      entries: prices.length,
+    };
   },
 
   async getSummary(minEntries) {
