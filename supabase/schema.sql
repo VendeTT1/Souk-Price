@@ -1,4 +1,4 @@
--- Run this in the Supabase SQL editor.
+-- Run this in the Supabase SQL editor (safe to re-run).
 
 create table if not exists public.prices (
   id            uuid primary key default gen_random_uuid(),
@@ -45,6 +45,35 @@ from public.prices
 where created_at > now() - interval '30 days'
 group by category, item, unit;
 
+-- Average for the current search filters, computed over ALL matches (the UI only
+-- downloads one page at a time). Returns the unit with the most entries so that
+-- kg and per-unit prices are never mixed. NULL parameter = filter not applied.
+create or replace function public.search_stats(
+  p_item text default null,
+  p_region text default null,
+  p_city text default null,
+  p_neighborhood text default null,
+  p_market text default null,
+  p_rating smallint default null
+)
+returns table (unit text, avg_price numeric, entries int)
+language sql
+stable
+security invoker
+as $$
+  select p.unit, round(avg(p.price), 2), count(*)::int
+  from public.prices p
+  where (p_item is null         or p.item = p_item)
+    and (p_region is null       or p.region = p_region)
+    and (p_city is null         or p.city = p_city)
+    and (p_neighborhood is null or p.neighborhood ilike '%' || replace(replace(replace(p_neighborhood, '\', '\\'), '%', '\%'), '_', '\_') || '%')
+    and (p_market is null       or p.market_name  ilike '%' || replace(replace(replace(p_market, '\', '\\'), '%', '\%'), '_', '\_') || '%')
+    and (p_rating is null       or p.rating = p_rating)
+  group by p.unit
+  order by count(*) desc
+  limit 1;
+$$;
+
 -- No accounts for the POC: anonymous visitors can read and insert, nothing else.
 alter table public.prices enable row level security;
 
@@ -56,3 +85,5 @@ create policy "public insert" on public.prices for insert with check (true);
 
 grant select on public.price_summary to anon;
 grant select, insert on public.prices to anon;
+
+grant execute on function public.search_stats(text, text, text, text, text, smallint) to anon;
