@@ -1,35 +1,103 @@
 {
-  "app": { "title": "Prix du Souk", "tagline": "Combien ça coûte vraiment près de chez vous ? Des prix partagés par des gens comme vous." },
-  "nav": { "dashboard": "Aperçu", "search": "Rechercher", "add": "Ajouter un prix" },
+  "app": {
+    "title": "Prix du Souk",
+    "tagline": "Combien ça coûte vraiment près de chez vous ? Des prix partagés par des gens comme vous."
+  },
+  "nav": {
+    "dashboard": "Aperçu",
+    "search": "Rechercher",
+    "add": "Ajouter un prix"
+  },
   "common": {
-    "all": "Tous", "select": "Choisir…", "loading": "Chargement…", "error": "Une erreur est survenue. Veuillez réessayer.",
-    "dh": "MAD", "perKg": "/ kg", "perUnit": "/ unité", "entries": "relevés", "cities": "villes", "reset": "Réinitialiser"
+    "all": "Tous",
+    "select": "Choisir…",
+    "loading": "Chargement…",
+    "error": "Une erreur est survenue. Veuillez réessayer.",
+    "dh": "MAD",
+    "perKg": "/ kg",
+    "perUnit": "/ unité",
+    "entries": "relevés",
+    "cities": "villes",
+    "reset": "Réinitialiser",
+    "range": "{{from}}–{{to}} sur {{total}}",
+    "prev": "Page précédente",
+    "next": "Page suivante"
   },
   "categories": {
-    "vegetables": "Légumes", "fruits": "Fruits", "meat": "Viande", "fish": "Poisson", "poultry": "Volaille", "eggs": "Œufs"
+    "vegetables": "Légumes",
+    "fruits": "Fruits",
+    "meat": "Viande",
+    "fish": "Poisson",
+    "poultry": "Volaille",
+    "eggs": "Œufs"
   },
-  "marketTypes": { "souk": "Marché (souk)", "street": "Vendeur de rue", "supermarket": "Supermarché", "shop": "Boutique / boucherie / poissonnerie" },
-  "rating": { "label": "Rapport qualité / prix", "1": "Mauvais", "2": "Neutre", "3": "Bon", "avg": "Satisfaction moyenne" },
+  "marketTypes": {
+    "souk": "Marché (souk)",
+    "street": "Vendeur de rue",
+    "supermarket": "Supermarché",
+    "shop": "Boutique / boucherie / poissonnerie"
+  },
+  "rating": {
+    "label": "Rapport qualité / prix",
+    "1": "Mauvais",
+    "2": "Neutre",
+    "3": "Bon",
+    "avg": "Satisfaction moyenne"
+  },
   "dashboard": {
     "title": "Prix moyens des 30 derniers jours",
     "subtitle": "Les produits avec assez de contributions d’utilisateurs.",
     "empty": "Pas encore assez de données. Un produit apparaît ici dès {{min}} prix saisis ou plus.",
-    "min": "min", "max": "max", "based": "Basé sur {{count}} relevés dans {{cities}} villes", "demo": "Mode démo : les données restent dans votre navigateur."
+    "min": "min",
+    "max": "max",
+    "based": "Basé sur {{count}} relevés dans {{cities}} villes",
+    "demo": "Mode démo : les données restent dans votre navigateur."
   },
   "search": {
-    "title": "Rechercher des prix", "item": "Produit", "anyItem": "Tous les produits", "region": "Région", "city": "Ville",
-    "neighborhood": "Quartier", "market": "Nom du marché / vendeur", "rating": "Satisfaction",
-    "results": "{{count}} résultats", "noResults": "Aucun prix ne correspond à ces filtres.",
-    "average": "Moyenne des résultats", "colPlace": "Lieu", "colItem": "Produit", "colPrice": "Prix", "colRating": "Avis", "colDate": "Date", "colNote": "Note"
+    "title": "Rechercher des prix",
+    "item": "Produit",
+    "anyItem": "Tous les produits",
+    "region": "Région",
+    "city": "Ville",
+    "neighborhood": "Quartier",
+    "market": "Nom du marché / vendeur",
+    "rating": "Satisfaction",
+    "results": "{{count}} résultats",
+    "noResults": "Aucun prix ne correspond à ces filtres.",
+    "average": "Moyenne des résultats",
+    "colPlace": "Lieu",
+    "colItem": "Produit",
+    "colPrice": "Prix",
+    "colRating": "Avis",
+    "colDate": "Date",
+    "colNote": "Note"
   },
   "form": {
-    "title": "Ajouter un prix payé", "location": "Où", "product": "Quoi", "feedback": "Votre avis",
-    "region": "Région", "city": "Ville", "neighborhood": "Quartier", "neighborhoodHint": "Choisissez une suggestion ou saisissez le vôtre",
-    "marketType": "Type de lieu", "marketName": "Nom du marché ou du vendeur", "marketNameHint": "ex. Marjane, Marché Central, la charrette de légumes au coin",
-    "category": "Catégorie", "item": "Produit", "price": "Prix (MAD)", "unit": "Unité", "kg": "au kg", "unitPiece": "à l’unité",
-    "comment": "Commentaire ou recommandation de vendeur (facultatif)", "commentHint": "Produits frais, vendeur sympa, ouvert jusqu’à 21h…",
-    "submit": "Envoyer le prix", "thanks": "Merci ! Votre prix a été ajouté.", "another": "En ajouter un autre",
-    "errRequired": "Veuillez remplir ce champ", "errPrice": "Saisissez un prix valide supérieur à 0", "errMax": "Le prix semble trop élevé"
+    "title": "Ajouter un prix payé",
+    "location": "Où",
+    "product": "Quoi",
+    "feedback": "Votre avis",
+    "region": "Région",
+    "city": "Ville",
+    "neighborhood": "Quartier",
+    "neighborhoodHint": "Choisissez une suggestion ou saisissez le vôtre",
+    "marketType": "Type de lieu",
+    "marketName": "Nom du marché ou du vendeur",
+    "marketNameHint": "ex. Marjane, Marché Central, la charrette de légumes au coin",
+    "category": "Catégorie",
+    "item": "Produit",
+    "price": "Prix (MAD)",
+    "unit": "Unité",
+    "kg": "au kg",
+    "unitPiece": "à l’unité",
+    "comment": "Commentaire ou recommandation de vendeur (facultatif)",
+    "commentHint": "Produits frais, vendeur sympa, ouvert jusqu’à 21h…",
+    "submit": "Envoyer le prix",
+    "thanks": "Merci ! Votre prix a été ajouté.",
+    "another": "En ajouter un autre",
+    "errRequired": "Veuillez remplir ce champ",
+    "errPrice": "Saisissez un prix valide supérieur à 0",
+    "errMax": "Le prix semble trop élevé"
   },
   "footer": "Les prix sont fournis par les utilisateurs et peuvent varier."
 }

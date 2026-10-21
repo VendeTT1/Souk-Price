@@ -5,7 +5,9 @@ import { CATEGORIES, ITEMS, itemName } from '../data/catalog';
 import { REGIONS, citiesOfRegion, CITIES, cityName, regionName } from '../data/locations';
 import { formatPrice, formatDate } from '../lib/format';
 import { RatingBadge } from './Rating';
+import Pagination from './Pagination';
 
+const PAGE_SIZE = 10;
 const EMPTY = { item: '', region: '', city: '', neighborhood: '', marketName: '', rating: '' };
 
 function useDebounced(value, ms = 300) {
@@ -23,6 +25,7 @@ export default function Search({ version }) {
   const [f, setF] = useState(EMPTY);
   const [rows, setRows] = useState(null);
   const [error, setError] = useState(false);
+  const [page, setPage] = useState(1);
 
   const set = (k) => (e) => setF((p) => ({ ...p, [k]: e.target.value }));
   const debounced = useDebounced(f);
@@ -39,6 +42,7 @@ export default function Search({ version }) {
     let alive = true;
     setRows(null);
     setError(false);
+    setPage(1);
     store.listPrices(debounced)
       .then((r) => alive && setRows(r))
       .catch(() => alive && setError(true));
@@ -141,7 +145,7 @@ export default function Search({ version }) {
                   </tr>
                 </thead>
                 <tbody>
-                  {rows.map((r) => (
+                  {rows.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE).map((r) => (
                     <tr key={r.id}>
                       <td data-label={t('search.colItem')}>{itemName(r.item, lang)}</td>
                       <td data-label={t('search.colPrice')} className="num">
@@ -160,6 +164,12 @@ export default function Search({ version }) {
               </table>
             </div>
           )}
+          <Pagination
+            page={page}
+            pageSize={PAGE_SIZE}
+            total={rows.length}
+            onChange={(p) => { setPage(p); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+          />
         </>
       )}
     </section>
