@@ -1,9 +1,10 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { store } from '../lib/store';
 import { CATEGORIES, itemsByCategory, getItem } from '../data/catalog';
 import { REGIONS, citiesOfRegion, getCity, MARKET_TYPES, SUPERMARKET_CHAINS } from '../data/locations';
 import { RATING_EMOJI } from './Rating';
+import { formatPrice } from '../lib/format';
 
 const INITIAL = {
   region: '', city: '', neighborhood: '', marketType: '', marketName: '',
@@ -26,7 +27,8 @@ export default function AddPriceForm({ onAdded }) {
   const lang = i18n.language;
   const [f, setF] = useState(INITIAL);
   const [errors, setErrors] = useState({});
-  const [status, setStatus] = useState('idle'); // idle | saving | done | error
+  const [status, setStatus] = useState('idle'); // idle | saving | done | error | rate_limit | duplicate
+  const [typical, setTypical] = useState(null);  // { median_price, entries } of the chosen item
 
   const set = (k, v) => setF((p) => ({ ...p, [k]: v }));
   const cities = f.region ? citiesOfRegion(f.region) : [];
@@ -35,6 +37,22 @@ export default function AddPriceForm({ onAdded }) {
     () => (f.category ? itemsByCategory(f.category).sort((a, b) => a.names[lang].localeCompare(b.names[lang], lang)) : []),
     [f.category, lang],
   );
+
+  // typical price of the chosen item, used for a gentle "are you sure?" hint
+  useEffect(() => {
+    let alive = true;
+    setTypical(null);
+    if (f.item) {
+      store.getTypical(f.item, f.unit)
+        .then((r) => alive && setTypical(r))
+        .catch(() => {});
+    }
+    return () => { alive = false; };
+  }, [f.item, f.unit]);
+
+  const priceNum = Number(f.price);
+  const looksOff = typical && typical.entries >= 5 && priceNum > 0
+    && (priceNum > typical.median_price * 5 || priceNum < typical.median_price / 5);
 
   // price: digits and a single decimal separator only (accepts "," and converts it to ".")
   const onPrice = (e) => {
@@ -79,8 +97,12 @@ export default function AddPriceForm({ onAdded }) {
       });
       setStatus('done');
       onAdded?.();
-    } catch {
-      setStatus('error');
+    } catch (err) {
+      // the database trigger answers with a short code in the message
+      const msg = String(err?.message ?? '');
+      if (msg.includes('rate_limit')) setStatus('rate_limit');
+      else if (msg.includes('duplicate')) setStatus('duplicate');
+      else setStatus('error');
     }
   };
 
@@ -161,6 +183,14 @@ export default function AddPriceForm({ onAdded }) {
         <div className="row">
           <Field id="price" error={errors.price} label={t('form.price')}>
             <input inputMode="decimal" autoComplete="off" placeholder="0.00" value={f.price} onChange={onPrice} />
+            {looksOff && (
+              <span className="warn" role="status">
+                {t('form.looksOff', {
+                  typical: formatPrice(typical.median_price, lang),
+                  unit: f.unit === 'kg' ? t('common.perKg') : t('common.perUnit'),
+                })}
+              </span>
+            )}
           </Field>
           <Field id="unit" error={errors.unit} label={t('form.unit')}>
             <select value={f.unit} onChange={(e) => set('unit', e.target.value)}>
@@ -201,6 +231,8 @@ export default function AddPriceForm({ onAdded }) {
       />
 
       {status === 'error' && <p className="error">{t('common.error')}</p>}
+      {status === 'rate_limit' && <p className="error">{t('form.errRateLimit')}</p>}
+      {status === 'duplicate' && <p className="error">{t('form.errDuplicate')}</p>}
       <button className="btn" type="submit" disabled={status === 'saving'}>
         {status === 'saving' ? t('common.loading') : t('form.submit')}
       </button>

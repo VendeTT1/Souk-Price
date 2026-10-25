@@ -54,6 +54,18 @@ export const supabaseStore = {
     return data?.[0] ?? null;
   },
 
+  // Typical price (median) of one item over the last 30 days, for the "are you sure?" hint.
+  async getTypical(item, unit) {
+    const { data, error } = await supabase
+      .from('price_summary')
+      .select('median_price, entries')
+      .eq('item', item)
+      .eq('unit', unit)
+      .maybeSingle();
+    if (error) throw error;
+    return data;
+  },
+
   async getSummary(minEntries) {
     const { data, error } = await supabase
       .from('price_summary')
