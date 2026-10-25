@@ -56,6 +56,13 @@ function write(rows) {
   } catch { /* ignore */ }
 }
 
+const median = (nums) => {
+  const a = [...nums].sort((x, y) => x - y);
+  const m = Math.floor(a.length / 2);
+  return a.length % 2 ? a[m] : (a[m - 1] + a[m]) / 2;
+};
+const round2 = (n) => Math.round(n * 100) / 100;
+
 const has = (hay, needle) => String(hay).toLowerCase().includes(String(needle).toLowerCase());
 
 function filterRows(rows, { item, region, city, neighborhood, marketName, rating }) {
@@ -90,9 +97,17 @@ export const localStore = {
     const [unit, prices] = [...byUnit.entries()].sort((a, b) => b[1].length - a[1].length)[0];
     return {
       unit,
-      avg_price: Math.round((prices.reduce((x, y) => x + y, 0) / prices.length) * 100) / 100,
+      avg_price: round2(prices.reduce((x, y) => x + y, 0) / prices.length),
+      median_price: round2(median(prices)),
       entries: prices.length,
     };
+  },
+
+  async getTypical(item, unit) {
+    const prices = read()
+      .filter((r) => r.item === item && r.unit === unit)
+      .map((r) => Number(r.price));
+    return prices.length ? { median_price: round2(median(prices)), entries: prices.length } : null;
   },
 
   async getSummary(minEntries) {
@@ -113,7 +128,8 @@ export const localStore = {
         item: rows[0].item,
         unit: rows[0].unit,
         entries: rows.length,
-        avg_price: Math.round((prices.reduce((a, b) => a + b, 0) / rows.length) * 100) / 100,
+        avg_price: round2(prices.reduce((a, b) => a + b, 0) / rows.length),
+        median_price: round2(median(prices)),
         min_price: Math.min(...prices),
         max_price: Math.max(...prices),
         avg_rating: Math.round((rows.reduce((a, r) => a + r.rating, 0) / rows.length) * 100) / 100,

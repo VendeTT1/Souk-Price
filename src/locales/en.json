@@ -45,7 +45,7 @@
     "avg": "Avg. satisfaction"
   },
   "dashboard": {
-    "title": "Average prices, last 30 days",
+    "title": "Typical prices (median), last 30 days",
     "subtitle": "Items with enough contributions across users.",
     "empty": "Not enough data yet. Items appear here once {{min}} or more prices are entered.",
     "min": "min",
@@ -72,7 +72,8 @@
     "colDate": "Date",
     "colNote": "Note",
     "more": "Show details",
-    "less": "Hide details"
+    "less": "Hide details",
+    "median": "Typical price (median)"
   },
   "form": {
     "title": "Add a price you paid",
@@ -99,7 +100,10 @@
     "another": "Add another",
     "errRequired": "Please fill this field",
     "errPrice": "Enter a valid price greater than 0",
-    "errMax": "Price looks too high"
+    "errMax": "Price looks too high",
+    "looksOff": "The usual price is about {{typical}} MAD {{unit}}. Please double-check.",
+    "errRateLimit": "You have sent many prices recently. Please try again later.",
+    "errDuplicate": "You already sent this exact price. Thank you!"
   },
   "footer": "Prices are contributed by users and may vary."
 }

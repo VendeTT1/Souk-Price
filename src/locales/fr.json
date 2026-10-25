@@ -45,7 +45,7 @@
     "avg": "Satisfaction moyenne"
   },
   "dashboard": {
-    "title": "Prix moyens des 30 derniers jours",
+    "title": "Prix typiques (médiane) des 30 derniers jours",
     "subtitle": "Les produits avec assez de contributions d’utilisateurs.",
     "empty": "Pas encore assez de données. Un produit apparaît ici dès {{min}} prix saisis ou plus.",
     "min": "min",
@@ -72,7 +72,8 @@
     "colDate": "Date",
     "colNote": "Note",
     "more": "Voir les détails",
-    "less": "Masquer les détails"
+    "less": "Masquer les détails",
+    "median": "Prix typique (médiane)"
   },
   "form": {
     "title": "Ajouter un prix payé",
@@ -99,7 +100,10 @@
     "another": "En ajouter un autre",
     "errRequired": "Veuillez remplir ce champ",
     "errPrice": "Saisissez un prix valide supérieur à 0",
-    "errMax": "Le prix semble trop élevé"
+    "errMax": "Le prix semble trop élevé",
+    "looksOff": "Le prix habituel est d’environ {{typical}} MAD {{unit}}. Merci de vérifier.",
+    "errRateLimit": "Vous avez envoyé beaucoup de prix récemment. Réessayez plus tard.",
+    "errDuplicate": "Vous avez déjà envoyé ce prix exact. Merci !"
   },
   "footer": "Les prix sont fournis par les utilisateurs et peuvent varier."
 }

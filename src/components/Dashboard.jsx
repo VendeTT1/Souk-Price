@@ -51,7 +51,7 @@ export default function Dashboard({ version }) {
               <h3>{itemName(r.item, lang)}</h3>
             </div>
             <div className="big-price">
-              {formatPrice(r.avg_price, lang)} <small>{t('common.dh')} {unitLabel(r.unit)}</small>
+              {formatPrice(r.median_price ?? r.avg_price, lang)} <small>{t('common.dh')} {unitLabel(r.unit)}</small>
             </div>
             <div className="range muted">
               {t('dashboard.min')} {formatPrice(r.min_price, lang)} · {t('dashboard.max')} {formatPrice(r.max_price, lang)}
