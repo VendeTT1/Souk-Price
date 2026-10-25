@@ -117,6 +117,9 @@ td.note { max-width: 320px; color: var(--muted); overflow-wrap: anywhere; }
 .rating-badge.r2 { background: var(--r2); }
 .rating-badge.r3 { background: var(--r3); }
 
+/* phone-only cells: hidden in the desktop table */
+.c-city, .c-toggle { display: none; }
+
 /* ---------- pagination ---------- */
 .pager { display: flex; justify-content: space-between; align-items: center; gap: 10px 16px; flex-wrap: wrap; margin-top: 14px; }
 .pager-buttons { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
@@ -185,14 +188,52 @@ legend { font-weight: 700; padding: 0 8px; color: var(--accent-dark); }
 @media (max-width: 720px) {
   .row { grid-template-columns: 1fr 1fr; }
   thead { display: none; }
-  table, tbody, tr, td { display: block; width: 100%; }
+  table, tbody { display: block; width: 100%; }
   .table-wrap { border: 0; background: transparent; overflow: visible; }
-  tr { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 12px; margin-bottom: 10px; }
-  td { border: 0; padding: 4px 0; display: flex; justify-content: space-between; align-items: baseline; gap: 12px; text-align: end; }
-  td > div { text-align: end; }
-  td::before { content: attr(data-label); font-size: .72rem; text-transform: uppercase; color: var(--muted); flex-shrink: 0; text-align: start; }
-  td.note { max-width: none; }
-  td.note:empty { display: none; }
+
+  /* Collapsed card: item + price, city + date, and a "+" button.
+     Everything else appears when the card is expanded. */
+  tr {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto 44px;
+    grid-template-areas:
+      'item  price toggle'
+      'city  date  toggle'
+      'place place place'
+      'rating rating rating'
+      'note  note  note';
+    column-gap: 8px; row-gap: 2px; align-items: center;
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 10px 12px; margin-bottom: 10px;
+  }
+  td { display: block; width: auto; border: 0; padding: 0; text-align: start; min-width: 0; }
+  .c-item { grid-area: item; font-weight: 700; font-size: 1.02rem; overflow-wrap: anywhere; }
+  .c-price { grid-area: price; text-align: end; font-size: 1.05rem; }
+  .c-city { grid-area: city; display: block; color: var(--muted); font-size: .85rem; }
+  .c-date { grid-area: date; text-align: end; }
+  .c-toggle { grid-area: toggle; display: flex; justify-content: flex-end; }
+  .c-place { grid-area: place; }
+  .c-rating { grid-area: rating; }
+  .c-note { grid-area: note; max-width: none; }
+
+  .toggle-btn {
+    width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border);
+    background: var(--accent-soft); color: var(--accent-dark); font: inherit; font-size: 1.4rem; line-height: 1;
+    cursor: pointer; display: grid; place-items: center;
+  }
+  tr.expanded .toggle-btn { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  td.detail { display: none; }
+  tr.expanded td.detail {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+    padding-top: 8px; margin-top: 8px; border-top: 1px dashed var(--border);
+  }
+  tr.expanded td.detail + td.detail { margin-top: 0; border-top: 0; padding-top: 6px; }
+  tr.expanded td.detail::before {
+    content: attr(data-label); font-size: .72rem; text-transform: uppercase; color: var(--muted); flex-shrink: 0;
+  }
+  tr.expanded td.detail > div { text-align: end; }
+  tr.expanded td.note:empty { display: none; }
 
   .pager { justify-content: center; }
   .pager-info { width: 100%; text-align: center; }

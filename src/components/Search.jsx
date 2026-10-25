@@ -26,6 +26,7 @@ export default function Search({ version }) {
   const [result, setResult] = useState(null); // { rows, total }
   const [stats, setStats] = useState(null);
   const [error, setError] = useState(false);
+  const [open, setOpen] = useState(() => new Set()); // expanded cards (phone layout)
   const [pageState, setPageState] = useState({ key: '', page: 1 });
 
   const set = (k) => (e) => setF((p) => ({ ...p, [k]: e.target.value }));
@@ -63,6 +64,12 @@ export default function Search({ version }) {
       .catch(() => alive && setStats(null));
     return () => { alive = false; };
   }, [debounced, version]);
+
+  const toggle = (id) => setOpen((prev) => {
+    const next = new Set(prev);
+    if (next.has(id)) next.delete(id); else next.add(id);
+    return next;
+  });
 
   const unitLabel = (u) => (u === 'kg' ? t('common.perKg') : t('common.perUnit'));
 
@@ -152,21 +159,37 @@ export default function Search({ version }) {
                   </tr>
                 </thead>
                 <tbody>
-                  {result.rows.map((r) => (
-                    <tr key={r.id}>
-                      <td data-label={t('search.colItem')}>{itemName(r.item, lang)}</td>
-                      <td data-label={t('search.colPrice')} className="num">
-                        {formatPrice(r.price, lang)} <small>{t('common.dh')} {unitLabel(r.unit)}</small>
-                      </td>
-                      <td data-label={t('search.colPlace')}>
-                        <div>{r.market_name} <span className="muted small">({t(`marketTypes.${r.market_type}`)})</span></div>
-                        <div className="muted small">{r.neighborhood}, {cityName(r.city, lang)} · {regionName(r.region, lang)}</div>
-                      </td>
-                      <td data-label={t('search.colRating')}><RatingBadge value={r.rating} /></td>
-                      <td data-label={t('search.colNote')} className="note">{r.comment}</td>
-                      <td data-label={t('search.colDate')} className="muted small">{formatDate(r.created_at, lang)}</td>
-                    </tr>
-                  ))}
+                  {result.rows.map((r) => {
+                    const isOpen = open.has(r.id);
+                    return (
+                      <tr key={r.id} className={isOpen ? 'expanded' : ''}>
+                        <td className="c-item" data-label={t('search.colItem')}>{itemName(r.item, lang)}</td>
+                        <td className="c-price num" data-label={t('search.colPrice')}>
+                          {formatPrice(r.price, lang)} <small>{t('common.dh')} {unitLabel(r.unit)}</small>
+                        </td>
+                        {/* phone only: short place line (city); the full place sits in the expandable part */}
+                        <td className="c-city" aria-hidden="true">{cityName(r.city, lang)}</td>
+                        <td className="c-place detail" data-label={t('search.colPlace')}>
+                          <div>{r.market_name} <span className="muted small">({t(`marketTypes.${r.market_type}`)})</span></div>
+                          <div className="muted small">{r.neighborhood}, {cityName(r.city, lang)} · {regionName(r.region, lang)}</div>
+                        </td>
+                        <td className="c-rating detail" data-label={t('search.colRating')}><RatingBadge value={r.rating} /></td>
+                        <td className="c-note detail note" data-label={t('search.colNote')}>{r.comment}</td>
+                        <td className="c-date muted small" data-label={t('search.colDate')}>{formatDate(r.created_at, lang)}</td>
+                        <td className="c-toggle">
+                          <button
+                            type="button"
+                            className="toggle-btn"
+                            aria-expanded={isOpen}
+                            aria-label={isOpen ? t('search.less') : t('search.more')}
+                            onClick={() => toggle(r.id)}
+                          >
+                            {isOpen ? '−' : '+'}
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
