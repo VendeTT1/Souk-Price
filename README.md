@@ -16,7 +16,8 @@ With no Supabase variables the app runs in **demo mode**: data is seeded and sto
 ## Connect Supabase
 
 1. Create a project at supabase.com.
-2. Open the SQL editor and run `supabase/schema.sql` (table, checks, RLS policies, `price_summary` view).
+2. Open the SQL editor and run `supabase/schema.sql` (table, checks, RLS policies, `price_summary` view, `search_stats` function). It is safe to re-run.
+   Optionally run `supabase/seed.sql` for ~48 test rows (remove later with `delete from public.prices where comment = '[seed]';`).
 3. Copy the project URL and anon key (Project Settings → API) into `.env`:
    ```
    VITE_SUPABASE_URL=...
@@ -52,5 +53,6 @@ Switching to Firebase or Google Sheets later means writing one new file that imp
 ## Known limits of the POC
 
 - Anyone can insert (no auth). The DB enforces value ranges and the form has a honeypot, but there is no rate limiting. Add Supabase Edge Function + captcha or per-IP limits before a public launch.
+- Search pagination is server-side (`range()` + exact count); the search average comes from the `search_stats` SQL function so it covers every match, not just the visible page.
 - Averages are plain means; a few bad entries can skew an item. A median or trimmed mean in the view is an easy next step.
 - Item names are static in `catalog.js` for now; move to a table/API when the list grows.
