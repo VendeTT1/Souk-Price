@@ -138,7 +138,7 @@ export default function Search({ version }) {
             <strong>{t('search.results', { count: result.total })}</strong>
             {stats && (
               <span className="avg-pill">
-                {t('search.average')}: {formatPrice(stats.avg_price, lang)} {t('common.dh')} {unitLabel(stats.unit)}
+                {t('search.median')}: {formatPrice(stats.median_price ?? stats.avg_price, lang)} {t('common.dh')} {unitLabel(stats.unit)}
               </span>
             )}
           </div>

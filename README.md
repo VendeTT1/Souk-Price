@@ -16,7 +16,7 @@ With no Supabase variables the app runs in **demo mode**: data is seeded and sto
 ## Connect Supabase
 
 1. Create a project at supabase.com.
-2. Open the SQL editor and run `supabase/schema.sql` (table, checks, RLS policies, `price_summary` view, `search_stats` function). It is safe to re-run.
+2. Open the SQL editor and run `supabase/schema.sql` (table, checks, RLS policies, anti-abuse trigger, `price_summary` view, `search_stats` function). It is safe to re-run and upgrades an existing database in place.
    Optionally run `supabase/seed.sql` for ~48 test rows (remove later with `delete from public.prices where comment = '[seed]';`).
 3. Copy the project URL and anon key (Project Settings → API) into `.env`:
    ```
@@ -50,9 +50,17 @@ In Vercel: Import the repo (framework preset: Vite) and add the same three env v
 
 Switching to Firebase or Google Sheets later means writing one new file that implements the three store functions and pointing `store.js` at it.
 
+## Data quality and abuse protection
+
+Everything runs inside Supabase (`supabase/schema.sql`), so it also protects against anyone calling the API directly:
+
+- **Rate limit** per visitor (salted hash of the IP, kept 2 days): 15 submissions per hour and 60 per day. Tune `c_hour_limit` / `c_day_limit` in the trigger and re-run the file. The app shows a friendly message when it triggers.
+- **Duplicate guard**: the same item, place and price from the same visitor within an hour is refused.
+- **Plausibility check**: once an item has 5 prices, a new price more than 5x above or below the median is stored with `suspect = true`. It still shows in search but is ignored by the dashboard and the search median. The form also warns the user before submitting.
+- **Medians instead of averages** on the dashboard and in search, so one typo cannot move the headline price.
+- **Moderation**: `hidden = true` removes a row everywhere. Visitors cannot set `hidden` or `suspect` (column-level insert grants + the trigger forces them). SQL snippets are at the bottom of `schema.sql`.
+
 ## Known limits of the POC
 
-- Anyone can insert (no auth). The DB enforces value ranges and the form has a honeypot, but there is no rate limiting. Add Supabase Edge Function + captcha or per-IP limits before a public launch.
-- Search pagination is server-side (`range()` + exact count); the search average comes from the `search_stats` SQL function so it covers every match, not just the visible page.
-- Averages are plain means; a few bad entries can skew an item. A median or trimmed mean in the view is an easy next step.
-- Item names are static in `catalog.js` for now; move to a table/API when the list grows.
+- No accounts: the rate limit is per IP, so many people behind one mobile-carrier address share a budget.
+- Item names are static in `catalog.js`; move to a table/API when the list grows.
