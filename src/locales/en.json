@@ -70,7 +70,9 @@
     "colPrice": "Price",
     "colRating": "Rating",
     "colDate": "Date",
-    "colNote": "Note"
+    "colNote": "Note",
+    "more": "Show details",
+    "less": "Hide details"
   },
   "form": {
     "title": "Add a price you paid",
