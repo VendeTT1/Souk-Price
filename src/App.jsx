@@ -5,6 +5,7 @@ import Dashboard from './components/Dashboard';
 import Search from './components/Search';
 import AddPriceForm from './components/AddPriceForm';
 import { store } from './lib/store';
+import { Analytics } from '@vercel/analytics/react';
 
 const TABS = ['dashboard', 'search', 'add'];
 
@@ -47,6 +48,7 @@ export default function App() {
       </main>
 
       <footer className="footer">{t('footer')}</footer>
+      <Analytics />
     </div>
   );
 }
