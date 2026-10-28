@@ -1,12 +1,19 @@
 // Product catalog: ids are stored in the database, names are shown per language.
-// Later this can be replaced by an API call; only the shape { id, category, unit, names } matters.
+// Stored locally on purpose (no API call). Later this can move to a table; only the shape
+// { id, category, unit, names: { en, fr, ar } } matters.
+//
+// RULES
+// - NEVER rename or delete an existing id: prices already saved in the database point to it.
+// - Add new products at the end of their category block.
+// - unit is the default shown in the form: 'kg' or 'unit' (piece, bunch, tray...).
+// - Arabic: market name first; the standard (or alternative) word follows in parentheses when they differ.
 
 export const CATEGORIES = ['vegetables', 'fruits', 'meat', 'fish', 'poultry', 'eggs'];
 
 const i = (id, category, unit, en, fr, ar) => ({ id, category, unit, names: { en, fr, ar } });
 
 export const ITEMS = [
-  // vegetables
+  // ───────────────────────── vegetables ─────────────────────────
   i('tomato', 'vegetables', 'kg', 'Tomato', 'Tomate', 'طماطم'),
   i('potato', 'vegetables', 'kg', 'Potato', 'Pomme de terre', 'بطاطس'),
   i('onion', 'vegetables', 'kg', 'Onion', 'Oignon', 'بصل'),
@@ -19,7 +26,40 @@ export const ITEMS = [
   i('lettuce', 'vegetables', 'unit', 'Lettuce', 'Laitue', 'خس'),
   i('cauliflower', 'vegetables', 'kg', 'Cauliflower', 'Chou-fleur', 'قرنبيط'),
   i('green-beans', 'vegetables', 'kg', 'Green beans', 'Haricots verts', 'لوبيا خضراء'),
-  // fruits
+  i('red-onion', 'vegetables', 'kg', 'Red onion', 'Oignon rouge', 'بصل أحمر'),
+  i('cherry-tomato', 'vegetables', 'kg', 'Cherry tomatoes', 'Tomates cerises', 'طماطم كرزية'),
+  i('sweet-potato', 'vegetables', 'kg', 'Sweet potato', 'Patate douce', 'بطاطا حلوة'),
+  i('turnip', 'vegetables', 'kg', 'Turnip', 'Navet', 'لفت'),
+  i('beetroot', 'vegetables', 'kg', 'Beetroot', 'Betterave', 'شمندر'),
+  i('radish', 'vegetables', 'kg', 'Radish', 'Radis', 'فجل'),
+  i('cabbage', 'vegetables', 'kg', 'Cabbage', 'Chou', 'كرنب'),
+  i('red-cabbage', 'vegetables', 'kg', 'Red cabbage', 'Chou rouge', 'كرنب أحمر'),
+  i('broccoli', 'vegetables', 'kg', 'Broccoli', 'Brocoli', 'بروكلي'),
+  i('spinach', 'vegetables', 'kg', 'Spinach', 'Épinards', 'سبانخ'),
+  i('chard', 'vegetables', 'kg', 'Swiss chard', 'Blettes', 'سلق'),
+  i('arugula', 'vegetables', 'kg', 'Arugula', 'Roquette', 'جرجير'),
+  i('mallow', 'vegetables', 'kg', 'Mallow (khobiza)', 'Mauve (khobiza)', 'خبيزة'),
+  i('celery', 'vegetables', 'kg', 'Celery', 'Céleri', 'كرفس'),
+  i('leek', 'vegetables', 'kg', 'Leek', 'Poireau', 'كراث'),
+  i('fennel', 'vegetables', 'kg', 'Fennel', 'Fenouil', 'شمر'),
+  i('artichoke', 'vegetables', 'kg', 'Artichoke', 'Artichaut', 'خرشوف'),
+  i('asparagus', 'vegetables', 'kg', 'Asparagus', 'Asperges', 'هليون'),
+  i('green-peas', 'vegetables', 'kg', 'Green peas', 'Petits pois', 'جلبانة (بازلاء)'),
+  i('fava-beans', 'vegetables', 'kg', 'Fresh fava beans', 'Fèves fraîches', 'فول'),
+  i('okra', 'vegetables', 'kg', 'Okra', 'Gombo', 'بامية'),
+  i('pumpkin', 'vegetables', 'kg', 'Pumpkin', 'Potiron', 'قرع أحمر'),
+  i('hot-pepper', 'vegetables', 'kg', 'Hot pepper', 'Piment fort', 'فلفل حار'),
+  i('mushrooms', 'vegetables', 'kg', 'Mushrooms', 'Champignons', 'فطر (شامبينيون)'),
+  i('sweet-corn', 'vegetables', 'unit', 'Sweet corn (per ear)', 'Maïs doux (à l’épi)', 'ذرة حلوة (للعرجون)'),
+  i('ginger', 'vegetables', 'kg', 'Ginger', 'Gingembre', 'زنجبيل'),
+  i('desert-truffle', 'vegetables', 'kg', 'Desert truffle (terfez)', 'Truffe du désert (terfez)', 'ترفاس'),
+  i('parsley', 'vegetables', 'unit', 'Parsley (bunch)', 'Persil (botte)', 'معدنوس (حزمة)'),
+  i('coriander', 'vegetables', 'unit', 'Coriander (bunch)', 'Coriandre (botte)', 'قزبر (حزمة)'),
+  i('mint', 'vegetables', 'unit', 'Mint (bunch)', 'Menthe (botte)', 'نعناع (حزمة)'),
+  i('spring-onion', 'vegetables', 'unit', 'Spring onion (bunch)', 'Oignon vert (botte)', 'بصل أخضر (حزمة)'),
+  i('verbena', 'vegetables', 'unit', 'Verbena (bunch)', 'Verveine (botte)', 'لويزة (حزمة)'),
+
+  // ───────────────────────── fruits ─────────────────────────
   i('orange', 'fruits', 'kg', 'Orange', 'Orange', 'برتقال'),
   i('banana', 'fruits', 'kg', 'Banana', 'Banane', 'موز'),
   i('apple', 'fruits', 'kg', 'Apple', 'Pomme', 'تفاح'),
@@ -31,14 +71,62 @@ export const ITEMS = [
   i('pear', 'fruits', 'kg', 'Pear', 'Poire', 'إجاص'),
   i('avocado', 'fruits', 'kg', 'Avocado', 'Avocat', 'أفوكا'),
   i('dates', 'fruits', 'kg', 'Dates', 'Dattes', 'تمر'),
-  // meat
+  i('medjool-dates', 'fruits', 'kg', 'Medjool dates', 'Dattes Medjool', 'تمر مجهول'),
+  i('clementine', 'fruits', 'kg', 'Clementine', 'Clémentine', 'كليمونتين'),
+  i('mandarin', 'fruits', 'kg', 'Mandarin', 'Mandarine', 'ماندرين'),
+  i('blood-orange', 'fruits', 'kg', 'Blood orange', 'Orange sanguine', 'برتقال دموي'),
+  i('grapefruit', 'fruits', 'kg', 'Grapefruit', 'Pamplemousse', 'جريب فروت'),
+  i('lime', 'fruits', 'kg', 'Lime', 'Citron vert', 'ليمون أخضر'),
+  i('peach', 'fruits', 'kg', 'Peach', 'Pêche', 'خوخ'),
+  i('nectarine', 'fruits', 'kg', 'Nectarine', 'Nectarine', 'نكتارين'),
+  i('apricot', 'fruits', 'kg', 'Apricot', 'Abricot', 'مشمش'),
+  i('plum', 'fruits', 'kg', 'Plum', 'Prune', 'برقوق'),
+  i('cherry', 'fruits', 'kg', 'Cherry', 'Cerise', 'حب الملوك (كرز)'),
+  i('fig', 'fruits', 'kg', 'Fig', 'Figue', 'كرموس (تين)'),
+  i('prickly-pear', 'fruits', 'kg', 'Prickly pear', 'Figue de Barbarie', 'هندية (تين شوكي)'),
+  i('pomegranate', 'fruits', 'kg', 'Pomegranate', 'Grenade', 'رمان'),
+  i('quince', 'fruits', 'kg', 'Quince', 'Coing', 'سفرجل'),
+  i('loquat', 'fruits', 'kg', 'Loquat', 'Bibasse (néflier du Japon)', 'أسكدنيا'),
+  i('persimmon', 'fruits', 'kg', 'Persimmon', 'Kaki', 'كاكي'),
+  i('kiwi', 'fruits', 'kg', 'Kiwi', 'Kiwi', 'كيوي'),
+  i('mango', 'fruits', 'kg', 'Mango', 'Mangue', 'مانجو'),
+  i('pineapple', 'fruits', 'unit', 'Pineapple (each)', 'Ananas (pièce)', 'أناناس (حبة)'),
+  i('passion-fruit', 'fruits', 'kg', 'Passion fruit', 'Fruit de la passion', 'ماراكوجا'),
+  i('coconut', 'fruits', 'unit', 'Coconut (each)', 'Noix de coco (pièce)', 'جوز الهند (حبة)'),
+  i('raspberry', 'fruits', 'kg', 'Raspberry', 'Framboise', 'توت العليق'),
+  i('blueberry', 'fruits', 'kg', 'Blueberry', 'Myrtille', 'توت أزرق'),
+  i('olives', 'fruits', 'kg', 'Olives', 'Olives', 'زيتون'),
+
+  // ───────────────────────── meat ─────────────────────────
   i('beef', 'meat', 'kg', 'Beef', 'Bœuf', 'لحم البقر'),
   i('minced-beef', 'meat', 'kg', 'Minced beef', 'Viande hachée', 'لحم مفروم'),
   i('lamb', 'meat', 'kg', 'Lamb', 'Agneau', 'لحم الغنم'),
   i('veal', 'meat', 'kg', 'Veal', 'Veau', 'لحم العجل'),
   i('liver', 'meat', 'kg', 'Liver', 'Foie', 'كبدة'),
   i('merguez', 'meat', 'kg', 'Merguez', 'Merguez', 'مرقاز'),
-  // fish
+  i('kefta', 'meat', 'kg', 'Kefta (seasoned minced meat)', 'Kefta (viande hachée assaisonnée)', 'كفتة'),
+  i('beef-steak', 'meat', 'kg', 'Beef steak', 'Steak de bœuf', 'ستيك البقر'),
+  i('beef-stew', 'meat', 'kg', 'Beef for stew', 'Bœuf à ragoût', 'لحم البقر للطبخ'),
+  i('beef-ribs', 'meat', 'kg', 'Beef ribs', 'Côtes de bœuf', 'ضلوع البقر'),
+  i('oxtail', 'meat', 'kg', 'Oxtail', 'Queue de bœuf', 'ذيل البقر'),
+  i('veal-escalope', 'meat', 'kg', 'Veal escalope', 'Escalope de veau', 'إسكالوب العجل'),
+  i('lamb-leg', 'meat', 'kg', 'Lamb leg', 'Gigot d’agneau', 'فخذ الغنم'),
+  i('lamb-shoulder', 'meat', 'kg', 'Lamb shoulder', 'Épaule d’agneau', 'كتف الغنم'),
+  i('lamb-ribs', 'meat', 'kg', 'Lamb ribs', 'Côtes d’agneau', 'ضلوع الغنم'),
+  i('lamb-head', 'meat', 'unit', 'Sheep’s head (each)', 'Tête de mouton (pièce)', 'رأس الغنم (حبة)'),
+  i('lamb-trotters', 'meat', 'kg', 'Sheep’s trotters', 'Pieds de mouton', 'كراعين (كوارع)'),
+  i('tripe', 'meat', 'kg', 'Tripe', 'Tripes', 'كرشة'),
+  i('doubara', 'meat', 'kg', 'Doubara (lamb intestines)', 'Doubara (intestins d’agneau)', 'دوارة'),
+  i('kidneys', 'meat', 'kg', 'Kidneys', 'Rognons', 'كلاوي'),
+  i('heart', 'meat', 'kg', 'Heart', 'Cœur', 'قلب'),
+  i('lungs', 'meat', 'kg', 'Lungs', 'Poumon (mou)', 'رئة'),
+  i('brain', 'meat', 'kg', 'Brain', 'Cervelle', 'مخ'),
+  i('goat', 'meat', 'kg', 'Goat meat', 'Viande de chèvre', 'لحم الماعز'),
+  i('camel', 'meat', 'kg', 'Camel meat', 'Viande de chameau', 'لحم الجمل'),
+  i('sausage', 'meat', 'kg', 'Sausage', 'Saucisses', 'نقانق'),
+  i('khlii', 'meat', 'kg', 'Khlii (preserved meat)', 'Khlii (viande confite)', 'خليع'),
+
+  // ───────────────────────── fish & seafood ─────────────────────────
   i('sardines', 'fish', 'kg', 'Sardines', 'Sardines', 'سردين'),
   i('hake', 'fish', 'kg', 'Hake', 'Merlu', 'مارلو'),
   i('sole', 'fish', 'kg', 'Sole', 'Sole', 'سول'),
@@ -46,15 +134,45 @@ export const ITEMS = [
   i('sea-bream', 'fish', 'kg', 'Sea bream', 'Dorade', 'دوراد'),
   i('shrimp', 'fish', 'kg', 'Shrimp', 'Crevettes', 'كروفيت'),
   i('squid', 'fish', 'kg', 'Squid', 'Calamar', 'كالمار'),
-  // poultry
+  i('anchovy', 'fish', 'kg', 'Anchovy', 'Anchois', 'أنشوجة'),
+  i('tuna', 'fish', 'kg', 'Tuna', 'Thon', 'تونة'),
+  i('swordfish', 'fish', 'kg', 'Swordfish', 'Espadon', 'أبو سيف (إسبادون)'),
+  i('sea-bass', 'fish', 'kg', 'Sea bass', 'Bar (loup de mer)', 'قاروص'),
+  i('red-mullet', 'fish', 'kg', 'Red mullet', 'Rouget', 'سلطان إبراهيم'),
+  i('grey-mullet', 'fish', 'kg', 'Grey mullet', 'Mulet', 'بوري'),
+  i('salmon', 'fish', 'kg', 'Salmon', 'Saumon', 'سلمون'),
+  i('trout', 'fish', 'kg', 'Trout', 'Truite', 'سلمون مرقط (ترويت)'),
+  i('cuttlefish', 'fish', 'kg', 'Cuttlefish', 'Seiche', 'سبيدج (سيش)'),
+  i('octopus', 'fish', 'kg', 'Octopus', 'Poulpe', 'أخطبوط'),
+  i('gambas', 'fish', 'kg', 'Prawns (gambas)', 'Gambas', 'قمبري كبير (غامباس)'),
+  i('crab', 'fish', 'kg', 'Crab', 'Crabe', 'سلطعون (كراب)'),
+  i('lobster', 'fish', 'kg', 'Lobster', 'Homard', 'كركند'),
+  i('mussels', 'fish', 'kg', 'Mussels', 'Moules', 'بلح البحر'),
+  i('oysters', 'fish', 'kg', 'Oysters', 'Huîtres', 'محار'),
+
+  // ───────────────────────── poultry ─────────────────────────
   i('chicken-whole', 'poultry', 'kg', 'Whole chicken', 'Poulet entier', 'دجاج كامل'),
   i('chicken-breast', 'poultry', 'kg', 'Chicken breast', 'Blanc de poulet', 'صدر الدجاج'),
   i('chicken-thighs', 'poultry', 'kg', 'Chicken thighs', 'Cuisses de poulet', 'أفخاذ الدجاج'),
   i('turkey', 'poultry', 'kg', 'Turkey', 'Dinde', 'ديك رومي'),
   i('rabbit', 'poultry', 'kg', 'Rabbit', 'Lapin', 'أرنب'),
-  // eggs
+  i('chicken-baladi', 'poultry', 'kg', 'Free-range chicken (beldi)', 'Poulet beldi', 'دجاج بلدي'),
+  i('chicken-wings', 'poultry', 'kg', 'Chicken wings', 'Ailes de poulet', 'أجنحة الدجاج'),
+  i('chicken-drumsticks', 'poultry', 'kg', 'Chicken drumsticks', 'Pilons de poulet', 'سيقان الدجاج'),
+  i('chicken-liver', 'poultry', 'kg', 'Chicken liver', 'Foies de poulet', 'كبدة الدجاج'),
+  i('chicken-gizzards', 'poultry', 'kg', 'Chicken gizzards', 'Gésiers de poulet', 'قوانص الدجاج'),
+  i('turkey-escalope', 'poultry', 'kg', 'Turkey cutlet', 'Escalope de dinde', 'إسكالوب الديك الرومي'),
+  i('guinea-fowl', 'poultry', 'kg', 'Guinea fowl', 'Pintade', 'دجاج غينيا'),
+  i('duck', 'poultry', 'kg', 'Duck', 'Canard', 'بط'),
+  i('goose', 'poultry', 'kg', 'Goose', 'Oie', 'إوز'),
+  i('quail', 'poultry', 'unit', 'Quail (each)', 'Caille (pièce)', 'سمان (حبة)'),
+  i('pigeon', 'poultry', 'unit', 'Pigeon (each)', 'Pigeon (pièce)', 'حمام (حبة)'),
+
+  // ───────────────────────── eggs ─────────────────────────
   i('eggs', 'eggs', 'unit', 'Eggs (per egg)', 'Œufs (à l’unité)', 'بيض (للبيضة)'),
   i('eggs-baladi', 'eggs', 'unit', 'Country eggs (per egg)', 'Œufs beldi (à l’unité)', 'بيض بلدي (للبيضة)'),
+  i('eggs-tray', 'eggs', 'unit', 'Tray of 30 eggs', 'Plateau de 30 œufs', 'طبق 30 بيضة'),
+  i('quail-eggs', 'eggs', 'unit', 'Quail eggs (per egg)', 'Œufs de caille (à l’unité)', 'بيض السمان (للبيضة)'),
 ];
 
 export const itemsByCategory = (category) => ITEMS.filter((x) => x.category === category);
