@@ -21,7 +21,10 @@
     "reset": "إعادة ضبط",
     "range": "{{from}}–{{to}} من {{total}}",
     "prev": "الصفحة السابقة",
-    "next": "الصفحة التالية"
+    "next": "الصفحة التالية",
+    "typeToSearch": "اكتب للبحث…",
+    "noMatch": "لا توجد نتيجة مطابقة",
+    "clear": "مسح"
   },
   "categories": {
     "vegetables": "خضر",

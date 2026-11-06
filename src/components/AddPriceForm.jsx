@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { store } from '../lib/store';
-import { CATEGORIES, itemsByCategory, getItem } from '../data/catalog';
+import { CATEGORIES, ITEMS, itemsByCategory, getItem } from '../data/catalog';
 import { REGIONS, citiesOfRegion, getCity, MARKET_TYPES, SUPERMARKET_CHAINS } from '../data/locations';
 import { RATING_EMOJI } from './Rating';
+import SearchSelect from './SearchSelect';
 import { formatPrice } from '../lib/format';
 
 const INITIAL = {
@@ -33,10 +34,25 @@ export default function AddPriceForm({ onAdded }) {
   const set = (k, v) => setF((p) => ({ ...p, [k]: v }));
   const cities = f.region ? citiesOfRegion(f.region) : [];
   const neighborhoods = getCity(f.city)?.neighborhoods ?? [];
-  const items = useMemo(
-    () => (f.category ? itemsByCategory(f.category).sort((a, b) => a.names[lang].localeCompare(b.names[lang], lang)) : []),
-    [f.category, lang],
+  const itemOptions = useMemo(
+    () => (f.category ? itemsByCategory(f.category) : ITEMS)
+      .map((it) => ({
+        value: it.id,
+        label: it.names[lang],
+        keywords: `${it.names.en} ${it.names.fr} ${it.names.ar} ${it.id}`,
+        group: it.category,
+        groupLabel: t(`categories.${it.category}`),
+      }))
+      .sort((x, y) => CATEGORIES.indexOf(x.group) - CATEGORIES.indexOf(y.group)
+        || x.label.localeCompare(y.label, lang)),
+    [f.category, lang, t],
   );
+
+  // picking a product also fills in its category and its usual unit
+  const pickItem = (id) => {
+    const it = getItem(id);
+    setF((p) => ({ ...p, item: id, category: it ? it.category : p.category, unit: it?.unit ?? p.unit }));
+  };
 
   // typical price of the chosen item, used for a gentle "are you sure?" hint
   useEffect(() => {
@@ -171,15 +187,18 @@ export default function AddPriceForm({ onAdded }) {
             {CATEGORIES.map((c) => <option key={c} value={c}>{t(`categories.${c}`)}</option>)}
           </select>
         </Field>
-        <Field id="item" error={errors.item} label={t('form.item')}>
-          <select
-            value={f.item} disabled={!f.category}
-            onChange={(e) => setF((p) => ({ ...p, item: e.target.value, unit: getItem(e.target.value)?.unit ?? 'kg' }))}
-          >
-            <option value="">{t('common.select')}</option>
-            {items.map((i) => <option key={i.id} value={i.id}>{i.names[lang]}</option>)}
-          </select>
-        </Field>
+        <div className={`field ${errors.item ? 'has-error' : ''}`}>
+          <label className="label" htmlFor="f-item">{t('form.item')}</label>
+          <SearchSelect
+            id="f-item"
+            value={f.item}
+            onChange={pickItem}
+            options={itemOptions}
+            placeholder={t('common.typeToSearch')}
+            invalid={!!errors.item}
+          />
+          {errors.item && <span className="err">{errors.item}</span>}
+        </div>
         <div className="row">
           <Field id="price" error={errors.price} label={t('form.price')}>
             <input inputMode="decimal" autoComplete="off" placeholder="0.00" value={f.price} onChange={onPrice} />

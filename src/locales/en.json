@@ -21,7 +21,10 @@
     "reset": "Reset filters",
     "range": "{{from}}–{{to}} of {{total}}",
     "prev": "Previous page",
-    "next": "Next page"
+    "next": "Next page",
+    "typeToSearch": "Type to search…",
+    "noMatch": "No matching result",
+    "clear": "Clear"
   },
   "categories": {
     "vegetables": "Vegetables",

@@ -6,6 +6,7 @@ import { REGIONS, citiesOfRegion, CITIES, cityName, regionName } from '../data/l
 import { formatPrice, formatDate } from '../lib/format';
 import { RatingBadge } from './Rating';
 import Pagination from './Pagination';
+import SearchSelect from './SearchSelect';
 
 const PAGE_SIZE = 10;
 const EMPTY = { item: '', region: '', city: '', neighborhood: '', marketName: '', rating: '' };
@@ -32,10 +33,16 @@ export default function Search({ version }) {
   const set = (k) => (e) => setF((p) => ({ ...p, [k]: e.target.value }));
   const debounced = useDebounced(f);
 
-  const sortedItems = useMemo(
-    () => CATEGORIES.map((c) => ({ c, items: ITEMS.filter((i) => i.category === c)
-      .sort((a, b) => a.names[lang].localeCompare(b.names[lang], lang)) })),
-    [lang],
+  const itemOptions = useMemo(
+    () => ITEMS.map((it) => ({
+      value: it.id,
+      label: it.names[lang],
+      keywords: `${it.names.en} ${it.names.fr} ${it.names.ar} ${it.id}`,
+      group: it.category,
+      groupLabel: t(`categories.${it.category}`),
+    })).sort((x, y) => CATEGORIES.indexOf(x.group) - CATEGORIES.indexOf(y.group)
+      || x.label.localeCompare(y.label, lang)),
+    [lang, t],
   );
 
   const cityOptions = f.region ? citiesOfRegion(f.region) : CITIES;
@@ -78,17 +85,17 @@ export default function Search({ version }) {
       <h2>{t('search.title')}</h2>
 
       <div className="filters">
-        <label>
-          {t('search.item')}
-          <select value={f.item} onChange={set('item')}>
-            <option value="">{t('search.anyItem')}</option>
-            {sortedItems.map(({ c, items }) => (
-              <optgroup key={c} label={t(`categories.${c}`)}>
-                {items.map((i) => <option key={i.id} value={i.id}>{i.names[lang]}</option>)}
-              </optgroup>
-            ))}
-          </select>
-        </label>
+        <div className="filter-field">
+          <label htmlFor="f-item">{t('search.item')}</label>
+          <SearchSelect
+            id="f-item"
+            value={f.item}
+            onChange={(v) => setF((p) => ({ ...p, item: v }))}
+            options={itemOptions}
+            placeholder={t('search.anyItem')}
+            clearable
+          />
+        </div>
 
         <label>
           {t('search.region')}
