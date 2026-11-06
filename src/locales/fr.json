@@ -21,7 +21,10 @@
     "reset": "Réinitialiser",
     "range": "{{from}}–{{to}} sur {{total}}",
     "prev": "Page précédente",
-    "next": "Page suivante"
+    "next": "Page suivante",
+    "typeToSearch": "Tapez pour rechercher…",
+    "noMatch": "Aucun résultat",
+    "clear": "Effacer"
   },
   "categories": {
     "vegetables": "Légumes",

@@ -268,3 +268,31 @@ legend { font-weight: 700; padding: 0 8px; color: var(--accent-dark); }
   .tabs { position: static; box-shadow: none; border: 0; border-bottom: 1px solid var(--border); }
   .app { padding-bottom: 0; }
 }
+
+/* ---------- searchable picker ---------- */
+.picker { position: relative; }
+.picker input { padding-inline-end: 36px; }
+.picker.invalid input { border-color: var(--warn); }
+.picker-clear {
+  position: absolute; inset-inline-end: 4px; top: 50%; transform: translateY(-50%);
+  width: 32px; height: 32px; border: 0; border-radius: 50%; background: transparent;
+  color: var(--muted); font-size: 1.3rem; line-height: 1; cursor: pointer;
+}
+.picker-clear:hover { background: var(--accent-soft); color: var(--accent-dark); }
+.picker-list {
+  position: absolute; inset-inline: 0; top: calc(100% + 4px); z-index: 40;
+  margin: 0; padding: 4px; list-style: none; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 10px; box-shadow: 0 8px 24px rgba(0, 0, 0, .12);
+  max-height: min(320px, 50vh); overflow-y: auto; overscroll-behavior: contain;
+}
+.picker-group { padding: 8px 10px 4px; font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+.picker-opt {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+  min-height: 44px; padding: 10px; border-radius: 8px; cursor: pointer; align-items: center;
+}
+.picker-opt.active { background: var(--accent-soft); }
+.picker-opt.selected { font-weight: 700; color: var(--accent-dark); }
+.picker-opt small { flex-shrink: 0; }
+.picker-empty { padding: 14px 10px; color: var(--muted); text-align: center; }
+.filter-field { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.filter-field > label { font-size: .8rem; font-weight: 600; color: var(--muted); }
