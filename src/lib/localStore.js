@@ -83,6 +83,16 @@ export const localStore = {
     write(rows);
   },
 
+  // Demo mode: the review queue is just a list in this browser.
+  async addPending(payload) {
+    try {
+      const key = 'souk-prices-demo-pending-v1';
+      const list = JSON.parse(localStorage.getItem(key) || '[]');
+      list.unshift({ id: crypto.randomUUID(), created_at: new Date().toISOString(), status: 'pending', payload });
+      localStorage.setItem(key, JSON.stringify(list));
+    } catch { /* storage unavailable: nothing to keep in demo mode */ }
+  },
+
   async listPrices(filters = {}, { page = 1, pageSize = 10 } = {}) {
     const all = filterRows(read(), filters).sort((a, b) => b.created_at.localeCompare(a.created_at));
     return { rows: all.slice((page - 1) * pageSize, page * pageSize), total: all.length };

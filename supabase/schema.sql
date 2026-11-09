@@ -221,10 +221,113 @@ grant select on public.price_summary to anon;
 grant execute on function public.search_stats(text, text, text, text, text, smallint) to anon;
 
 -- =====================================================================
+-- 5. Review queue: submissions that contain a name we do not know yet
+-- =====================================================================
+-- When a visitor types a city, neighborhood or product that is not in the app's lists, the WHOLE form is
+-- stored here as JSON instead of in public.prices. Visitors can only insert; nobody can read it through
+-- the API. You review it in the dashboard, fix typos, add the new place/product to the app's data files,
+-- and turn the approved rows into clean INSERTs with scripts/pending-to-sql.mjs (see README).
+create table if not exists public.pending_submissions (
+  id          uuid primary key default gen_random_uuid(),
+  created_at  timestamptz not null default now(),
+  status      text not null default 'pending' check (status in ('pending','approved','rejected')),
+  review_note text,
+  payload     jsonb not null check (jsonb_typeof(payload) = 'object' and octet_length(payload::text) <= 4000)
+);
+create index if not exists pending_submissions_status_idx on public.pending_submissions (status, created_at);
+
+create or replace function public.pending_before_insert()
+returns trigger
+language plpgsql
+security definer
+set search_path = ''
+as $$
+declare
+  c_hour_limit constant int := 15;   -- shares the counters of public.prices
+  c_day_limit  constant int := 60;
+
+  v_p       jsonb := new.payload;
+  v_headers json := nullif(current_setting('request.headers', true), '')::json;
+  v_ip      text;
+  v_hash    text;
+  v_hour    int;
+  v_day     int;
+  v_item    text;
+begin
+  new.status      := 'pending';
+  new.review_note := null;
+
+  -- shape checks: reject garbage early (the app always sends this shape)
+  if jsonb_typeof(v_p -> 'custom') is distinct from 'object' or v_p -> 'custom' = '{}'::jsonb then
+    raise exception 'invalid_payload';
+  end if;
+  if coalesce(v_p ->> 'price', '') !~ '^[0-9]{1,4}(\.[0-9]{1,2})?$'
+     or (v_p ->> 'price')::numeric <= 0
+     or coalesce(v_p ->> 'unit', '') not in ('kg', 'unit')
+     or coalesce(v_p ->> 'rating', '') not in ('1', '2', '3')
+     or coalesce(v_p ->> 'market_type', '') not in ('souk', 'street', 'supermarket', 'shop')
+     or coalesce(v_p ->> 'category', '') not in ('vegetables', 'fruits', 'meat', 'fish', 'poultry', 'eggs')
+     or char_length(coalesce(v_p ->> 'neighborhood', '')) not between 1 and 80
+     or char_length(coalesce(v_p ->> 'market_name', '')) not between 1 and 80
+     or char_length(coalesce(v_p ->> 'comment', '')) > 500
+     or char_length(coalesce(v_p -> 'custom' ->> 'city', '')) > 80
+     or char_length(coalesce(v_p -> 'custom' ->> 'item', '')) > 60
+     or char_length(coalesce(v_p -> 'custom' ->> 'neighborhood', '')) > 80 then
+    raise exception 'invalid_payload';
+  end if;
+
+  v_ip := nullif(trim(split_part(
+            coalesce(v_headers ->> 'cf-connecting-ip', v_headers ->> 'x-forwarded-for', ''), ',', 1)), '');
+  if v_ip is not null then
+    v_hash := md5(v_ip || (select value from private.settings where key = 'ip_salt'));
+    v_item := coalesce(v_p ->> 'item', v_p -> 'custom' ->> 'item');
+
+    select count(*) filter (where created_at > now() - interval '1 hour'), count(*)
+      into v_hour, v_day
+      from private.submission_log
+     where ip_hash = v_hash and created_at > now() - interval '1 day';
+    if v_hour >= c_hour_limit or v_day >= c_day_limit then
+      raise exception 'rate_limit';
+    end if;
+
+    if exists (
+      select 1 from private.submission_log
+       where ip_hash = v_hash and item = v_item and market_name = v_p ->> 'market_name'
+         and price = (v_p ->> 'price')::numeric and created_at > now() - interval '1 hour'
+    ) then
+      raise exception 'duplicate';
+    end if;
+
+    insert into private.submission_log (ip_hash, item, market_name, price)
+    values (v_hash, v_item, v_p ->> 'market_name', (v_p ->> 'price')::numeric);
+  end if;
+
+  return new;
+end;
+$$;
+
+drop trigger if exists pending_before_insert on public.pending_submissions;
+create trigger pending_before_insert
+  before insert on public.pending_submissions
+  for each row execute function public.pending_before_insert();
+
+alter table public.pending_submissions enable row level security;
+drop policy if exists "public insert pending" on public.pending_submissions;
+create policy "public insert pending" on public.pending_submissions for insert with check (true);
+-- no select / update / delete policy and no grant: visitors can write here but never read it
+revoke all on public.pending_submissions from anon, authenticated;
+grant insert (payload) on public.pending_submissions to anon;
+
+-- =====================================================================
 -- Moderation cheat sheet (run in the SQL editor, never from the app)
 --   hide a row:    update public.prices set hidden = true  where id = '<uuid>';
 --   restore it:    update public.prices set hidden = false where id = '<uuid>';
 --   review flags:  select id, item, price, unit, market_name, created_at
 --                    from public.prices where suspect and not hidden order by created_at desc;
 --   un-flag one:   update public.prices set suspect = false where id = '<uuid>';
+--   review queue:  select id, created_at, payload from public.pending_submissions
+--                    where status = 'pending' order by created_at;
+--   export it:     select jsonb_pretty(jsonb_agg(to_jsonb(p) order by created_at))
+--                    from public.pending_submissions p where status = 'pending';
+--                  (then follow the README: scripts/pending-to-sql.mjs)
 -- =====================================================================

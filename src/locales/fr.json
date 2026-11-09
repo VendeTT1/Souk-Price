@@ -106,7 +106,17 @@
     "errMax": "Le prix semble trop élevé",
     "looksOff": "Le prix habituel est d’environ {{typical}} MAD {{unit}}. Merci de vérifier.",
     "errRateLimit": "Vous avez envoyé beaucoup de prix récemment. Réessayez plus tard.",
-    "errDuplicate": "Vous avez déjà envoyé ce prix exact. Merci !"
+    "errDuplicate": "Vous avez déjà envoyé ce prix exact. Merci !",
+    "cityMissing": "Ma ville n'est pas dans la liste",
+    "province": "Province / préfecture",
+    "cityName": "Nom de la ville ou du village",
+    "reviewHint": "Nouveau nom : votre prix apparaîtra une fois que nous l'aurons vérifié.",
+    "backToList": "← Retour à la liste",
+    "itemMissing": "Mon produit n'est pas dans la liste",
+    "itemName": "Nom du produit",
+    "itemNameHint": "Écrivez-le comme on le dit, dans la langue de votre choix",
+    "thanksHeld": "Merci ! Nous l’avons bien reçu.",
+    "thanksHeldText": "Comme il contient un nom que nous ne connaissons pas encore, nous le vérifions d'abord. Votre prix apparaîtra dès qu'il sera validé."
   },
   "footer": "Les prix sont fournis par les utilisateurs et peuvent varier."
 }
