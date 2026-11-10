@@ -96,6 +96,7 @@ export const ITEMS = [
   i('raspberry', 'fruits', 'kg', 'Raspberry', 'Framboise', 'توت العليق'),
   i('blueberry', 'fruits', 'kg', 'Blueberry', 'Myrtille', 'توت أزرق'),
   i('olives', 'fruits', 'kg', 'Olives', 'Olives', 'زيتون'),
+  i('mangosteen', 'fruits', 'kg', 'Mangosteen', 'Mangoustan', 'مانغوستان'),
 
   // ───────────────────────── meat ─────────────────────────
   i('beef', 'meat', 'kg', 'Beef', 'Bœuf', 'لحم البقر'),
