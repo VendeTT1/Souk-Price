@@ -106,7 +106,17 @@
     "errMax": "Price looks too high",
     "looksOff": "The usual price is about {{typical}} MAD {{unit}}. Please double-check.",
     "errRateLimit": "You have sent many prices recently. Please try again later.",
-    "errDuplicate": "You already sent this exact price. Thank you!"
+    "errDuplicate": "You already sent this exact price. Thank you!",
+    "cityMissing": "My city isn't listed",
+    "province": "Province / prefecture",
+    "cityName": "City or town name",
+    "reviewHint": "New name: your price will appear once we have checked it.",
+    "backToList": "← Back to the list",
+    "itemMissing": "My product isn't listed",
+    "itemName": "Product name",
+    "itemNameHint": "Write it as people say it, in any language",
+    "thanksHeld": "Thank you! We received it.",
+    "thanksHeldText": "Because it contains a name we do not know yet, we will check it first. Your price appears as soon as it is verified."
   },
   "footer": "Prices are contributed by users and may vary."
 }

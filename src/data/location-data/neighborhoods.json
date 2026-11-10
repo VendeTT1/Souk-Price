@@ -1,0 +1,10 @@
+{
+  "casablanca": ["Maarif", "Ain Diab", "Derb Sultan", "Hay Hassani", "Sidi Maarouf", "Ain Sebaa", "Sbata", "Bouskoura", "Oulfa", "Habous"],
+  "rabat": ["Agdal", "Hassan", "Souissi", "Youssoufia", "Yacoub El Mansour", "Océan", "Akkari"],
+  "sale": ["Tabriquet", "Hay Karima", "Bettana"],
+  "marrakech": ["Gueliz", "Medina", "Hivernage", "Daoudiate", "Sidi Youssef Ben Ali", "Massira", "Mhamid"],
+  "fes": ["Ville Nouvelle", "Fès El Bali", "Narjiss", "Atlas", "Saïss"],
+  "meknes": ["Hamria", "Ville Nouvelle", "Marjane"],
+  "tangier": ["Malabata", "Boukhalef", "Iberia", "Beni Makada", "Centre-ville"],
+  "agadir": ["Talborjt", "Founty", "Hay Mohammadi", "Anza", "Dcheira"]
+}

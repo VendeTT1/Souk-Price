@@ -2,14 +2,23 @@ import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { store } from '../lib/store';
 import { CATEGORIES, ITEMS, itemsByCategory, getItem } from '../data/catalog';
-import { REGIONS, citiesOfRegion, getCity, MARKET_TYPES, SUPERMARKET_CHAINS } from '../data/locations';
+import { REGIONS, getCity, getProvince, MARKET_TYPES, SUPERMARKET_CHAINS } from '../data/locations';
+import { cityOptions, provinceOptions } from '../lib/placeOptions';
+import { fold } from '../lib/search';
 import { RATING_EMOJI } from './Rating';
 import SearchSelect from './SearchSelect';
 import { formatPrice } from '../lib/format';
 
+// A neighborhood that is not in the suggestion list of a city that HAS a list is held for review
+// (set to false to let every typed neighborhood through, as before).
+const HOLD_UNKNOWN_NEIGHBORHOODS = true;
+
 const INITIAL = {
   region: '', city: '', neighborhood: '', marketType: '', marketName: '',
   category: '', item: '', price: '', unit: 'kg', rating: 0, comment: '', website: '', // website = honeypot
+  // "not in the list" mode: the typed name is sent for review instead of being saved straight away
+  cityOther: false, province: '', cityText: '',
+  itemOther: false, itemText: '',
 };
 
 function Field({ id, label, hint, error, children }) {
@@ -29,11 +38,29 @@ export default function AddPriceForm({ onAdded }) {
   const [f, setF] = useState(INITIAL);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState('idle'); // idle | saving | done | error | rate_limit | duplicate
+  const [heldDone, setHeldDone] = useState(false); // the last submission went to review
   const [typical, setTypical] = useState(null);  // { median_price, entries } of the chosen item
 
   const set = (k, v) => setF((p) => ({ ...p, [k]: v }));
-  const cities = f.region ? citiesOfRegion(f.region) : [];
   const neighborhoods = getCity(f.city)?.neighborhoods ?? [];
+  const cityOpts = useMemo(() => cityOptions(f.region, lang), [f.region, lang]);
+  const provinceOpts = useMemo(() => provinceOptions(f.region, lang), [f.region, lang]);
+
+  // Which typed values still have to be checked before they can enter the database?
+  const typedNeighborhood = f.neighborhood.trim();
+  const neighborhoodIsNew = HOLD_UNKNOWN_NEIGHBORHOODS && !f.cityOther && neighborhoods.length > 0 && !!typedNeighborhood
+    && !neighborhoods.some((n) => fold(n) === fold(typedNeighborhood));
+  const held = f.cityOther || f.itemOther || neighborhoodIsNew;
+
+  // picking a city also fills the region
+  const pickCity = (id) => {
+    const c = getCity(id);
+    setF((p) => ({ ...p, city: id, region: c ? c.region : p.region, neighborhood: '' }));
+  };
+  const pickProvince = (id) => {
+    const pr = getProvince(id);
+    setF((p) => ({ ...p, province: id, region: pr ? pr.region : p.region }));
+  };
   const itemOptions = useMemo(
     () => (f.category ? itemsByCategory(f.category) : ITEMS)
       .map((it) => ({
@@ -80,7 +107,10 @@ export default function AddPriceForm({ onAdded }) {
 
   const validate = () => {
     const e = {};
-    ['region', 'city', 'neighborhood', 'marketType', 'marketName', 'category', 'item'].forEach((k) => {
+    const required = ['region', 'neighborhood', 'marketType', 'marketName', 'category'];
+    if (f.cityOther) required.push('province', 'cityText'); else required.push('city');
+    if (f.itemOther) required.push('itemText'); else required.push('item');
+    required.forEach((k) => {
       if (!String(f[k]).trim()) e[k] = t('form.errRequired');
     });
     const p = Number(f.price);
@@ -98,19 +128,32 @@ export default function AddPriceForm({ onAdded }) {
     if (Object.keys(e).length) return;
     setStatus('saving');
     try {
-      await store.addPrice({
+      const entry = {
         region: f.region,
-        city: f.city,
+        city: f.cityOther ? null : f.city,
         neighborhood: f.neighborhood.trim(),
         market_type: f.marketType,
         market_name: f.marketName.trim(),
         category: f.category,
-        item: f.item,
+        item: f.itemOther ? null : f.item,
         price: Number(f.price),
         unit: f.unit,
         rating: f.rating,
         comment: f.comment.trim() || null,
-      });
+      };
+      if (held) {
+        // The whole form waits in a review queue; it is turned into a normal price once the new names are checked.
+        const custom = {};
+        if (f.cityOther) custom.city = f.cityText.trim();
+        if (f.itemOther) custom.item = f.itemText.trim();
+        if (neighborhoodIsNew) custom.neighborhood = typedNeighborhood;
+        await store.addPending({
+          form_version: 1, lang, ...entry, province: f.cityOther ? f.province : (getCity(f.city)?.province ?? null), custom,
+        });
+      } else {
+        await store.addPrice(entry);
+      }
+      setHeldDone(held);
       setStatus('done');
       onAdded?.();
     } catch (err) {
@@ -122,13 +165,14 @@ export default function AddPriceForm({ onAdded }) {
     }
   };
 
-  const reset = () => { setF(INITIAL); setErrors({}); setStatus('idle'); };
+  const reset = () => { setF(INITIAL); setErrors({}); setStatus('idle'); setHeldDone(false); };
 
   if (status === 'done') {
     return (
       <section className="thanks">
         <div className="big-emoji">🎉</div>
-        <h2>{t('form.thanks')}</h2>
+        <h2>{heldDone ? t('form.thanksHeld') : t('form.thanks')}</h2>
+        {heldDone && <p className="muted">{t('form.thanksHeldText')}</p>}
         <button className="btn" onClick={reset}>{t('form.another')}</button>
       </section>
     );
@@ -141,23 +185,57 @@ export default function AddPriceForm({ onAdded }) {
       <fieldset>
         <legend>{t('form.location')}</legend>
         <Field id="region" error={errors.region} label={t('form.region')}>
-          <select value={f.region} onChange={(e) => setF((p) => ({ ...p, region: e.target.value, city: '', neighborhood: '' }))}>
+          <select
+            value={f.region}
+            onChange={(e) => setF((p) => {
+              const keepCity = p.city && getCity(p.city)?.region === e.target.value;
+              const keepProv = p.province && getProvince(p.province)?.region === e.target.value;
+              return { ...p, region: e.target.value, city: keepCity ? p.city : '', province: keepProv ? p.province : '', neighborhood: keepCity ? p.neighborhood : '' };
+            })}
+          >
             <option value="">{t('common.select')}</option>
             {REGIONS.map((r) => <option key={r.id} value={r.id}>{r.names[lang]}</option>)}
           </select>
         </Field>
-        <Field id="city" error={errors.city} label={t('form.city')}>
-          <select value={f.city} disabled={!f.region} onChange={(e) => setF((p) => ({ ...p, city: e.target.value, neighborhood: '' }))}>
-            <option value="">{t('common.select')}</option>
-            {cities.map((c) => <option key={c.id} value={c.id}>{c.names[lang]}</option>)}
-          </select>
-        </Field>
-        <Field id="neighborhood" error={errors.neighborhood} label={t('form.neighborhood')} hint={t('form.neighborhoodHint')}>
+
+        {!f.cityOther ? (
+          <div className={`field ${errors.city ? 'has-error' : ''}`}>
+            <label className="label" htmlFor="f-city">{t('form.city')}</label>
+            <SearchSelect
+              id="f-city" value={f.city} onChange={pickCity} options={cityOpts}
+              placeholder={t('common.typeToSearch')} invalid={!!errors.city}
+            />
+            {errors.city && <span className="err">{errors.city}</span>}
+            <button type="button" className="link-btn" onClick={() => setF((p) => ({ ...p, cityOther: true, city: '', neighborhood: '' }))}>
+              {t('form.cityMissing')}
+            </button>
+          </div>
+        ) : (
+          <div className="suggest-box">
+            <div className={`field ${errors.province ? 'has-error' : ''}`}>
+              <label className="label" htmlFor="f-province">{t('form.province')}</label>
+              <SearchSelect
+                id="f-province" value={f.province} onChange={pickProvince} options={provinceOpts}
+                placeholder={t('common.typeToSearch')} invalid={!!errors.province}
+              />
+              {errors.province && <span className="err">{errors.province}</span>}
+            </div>
+            <Field id="cityText" error={errors.cityText} label={t('form.cityName')} hint={t('form.reviewHint')}>
+              <input value={f.cityText} maxLength={80} onChange={(e) => set('cityText', e.target.value)} />
+            </Field>
+            <button type="button" className="link-btn" onClick={() => setF((p) => ({ ...p, cityOther: false, province: '', cityText: '' }))}>
+              {t('form.backToList')}
+            </button>
+          </div>
+        )}
+
+        <Field id="neighborhood" error={errors.neighborhood} label={t('form.neighborhood')} hint={neighborhoodIsNew ? undefined : t('form.neighborhoodHint')}>
           <input
-            list="neighborhoods" value={f.neighborhood} maxLength={80} disabled={!f.city}
+            list="neighborhoods" value={f.neighborhood} maxLength={80} disabled={!f.city && !f.cityOther}
             onChange={(e) => set('neighborhood', e.target.value)}
           />
           <datalist id="neighborhoods">{neighborhoods.map((n) => <option key={n} value={n} />)}</datalist>
+          {neighborhoodIsNew && !errors.neighborhood && <span className="hint review">{t('form.reviewHint')}</span>}
         </Field>
         <Field id="marketType" error={errors.marketType} label={t('form.marketType')}>
           <select value={f.marketType} onChange={(e) => setF((p) => ({ ...p, marketType: e.target.value, marketName: '' }))}>
@@ -187,18 +265,33 @@ export default function AddPriceForm({ onAdded }) {
             {CATEGORIES.map((c) => <option key={c} value={c}>{t(`categories.${c}`)}</option>)}
           </select>
         </Field>
-        <div className={`field ${errors.item ? 'has-error' : ''}`}>
-          <label className="label" htmlFor="f-item">{t('form.item')}</label>
-          <SearchSelect
-            id="f-item"
-            value={f.item}
-            onChange={pickItem}
-            options={itemOptions}
-            placeholder={t('common.typeToSearch')}
-            invalid={!!errors.item}
-          />
-          {errors.item && <span className="err">{errors.item}</span>}
-        </div>
+        {!f.itemOther ? (
+          <div className={`field ${errors.item ? 'has-error' : ''}`}>
+            <label className="label" htmlFor="f-item">{t('form.item')}</label>
+            <SearchSelect
+              id="f-item"
+              value={f.item}
+              onChange={pickItem}
+              options={itemOptions}
+              placeholder={t('common.typeToSearch')}
+              invalid={!!errors.item}
+            />
+            {errors.item && <span className="err">{errors.item}</span>}
+            <button type="button" className="link-btn" onClick={() => setF((p) => ({ ...p, itemOther: true, item: '' }))}>
+              {t('form.itemMissing')}
+            </button>
+          </div>
+        ) : (
+          <div className="suggest-box">
+            <Field id="itemText" error={errors.itemText} label={t('form.itemName')} hint={t('form.itemNameHint')}>
+              <input value={f.itemText} maxLength={60} onChange={(e) => set('itemText', e.target.value)} />
+            </Field>
+            <p className="hint review">{t('form.reviewHint')}</p>
+            <button type="button" className="link-btn" onClick={() => setF((p) => ({ ...p, itemOther: false, itemText: '' }))}>
+              {t('form.backToList')}
+            </button>
+          </div>
+        )}
         <div className="row">
           <Field id="price" error={errors.price} label={t('form.price')}>
             <input inputMode="decimal" autoComplete="off" placeholder="0.00" value={f.price} onChange={onPrice} />

@@ -60,6 +60,28 @@ Everything runs inside Supabase (`supabase/schema.sql`), so it also protects aga
 - **Medians instead of averages** on the dashboard and in search, so one typo cannot move the headline price.
 - **Moderation**: `hidden = true` removes a row everywhere. Visitors cannot set `hidden` or `suspect` (column-level insert grants + the trigger forces them). SQL snippets are at the bottom of `schema.sql`.
 
+## Places and products that are not in the lists
+
+Locations are a hierarchy: **region > province / prefecture > city or town**, built from `src/data/location-data/`
+(`region.json`, `citties.json`, `province-region.json`, `towns-by-province.json`, optional `neighborhoods.json`).
+To add a place, add it to `towns-by-province.json` (`id` = English name in lower case without accents; never change an id later).
+
+If a visitor cannot find their city, neighborhood or product, they can type it. **Those submissions never go straight into
+`prices`.** The whole form is stored as JSON in `public.pending_submissions` (visitors can write to it but not read it).
+Review flow:
+
+1. In the Supabase SQL editor, export the queue:
+   `select jsonb_pretty(jsonb_agg(to_jsonb(p) order by created_at)) from public.pending_submissions p where status = 'pending';`
+   Copy the result into `pending.json`.
+2. Check each row. Add the real place to `towns-by-province.json` / the product to `src/data/catalog.js` (and deploy).
+3. In `pending.json` mark each row `"approved": true` (or `"rejected": true`) and, for unknown names, add the fixed values:
+   `"resolved": { "city": "tafraout", "item": "some-product-id", "neighborhood": "Centre" }`.
+4. `node scripts/pending-to-sql.mjs pending.json > approved.sql`, read `approved.sql`, run it in the SQL editor.
+   The script checks every id against the data files and skips rows with problems (it tells you why).
+
+A typed neighborhood is held only for cities that have a suggestion list in `neighborhoods.json`
+(switch: `HOLD_UNKNOWN_NEIGHBORHOODS` in `src/components/AddPriceForm.jsx`).
+
 ## Known limits of the POC
 
 - No accounts: the rate limit is per IP, so many people behind one mobile-carrier address share a budget.

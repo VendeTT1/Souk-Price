@@ -2,7 +2,8 @@ import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { store } from '../lib/store';
 import { CATEGORIES, ITEMS, itemName } from '../data/catalog';
-import { REGIONS, citiesOfRegion, CITIES, cityName, regionName } from '../data/locations';
+import { REGIONS, cityName, regionName } from '../data/locations';
+import { cityOptions } from '../lib/placeOptions';
 import { formatPrice, formatDate } from '../lib/format';
 import { RatingBadge } from './Rating';
 import Pagination from './Pagination';
@@ -45,7 +46,7 @@ export default function Search({ version }) {
     [lang, t],
   );
 
-  const cityOptions = f.region ? citiesOfRegion(f.region) : CITIES;
+  const cityOpts = useMemo(() => cityOptions(f.region, lang), [f.region, lang]);
 
   // page belongs to a set of filters: when the filters change, we are back on page 1
   const filterKey = `${JSON.stringify(debounced)}|${version}`;
@@ -105,13 +106,17 @@ export default function Search({ version }) {
           </select>
         </label>
 
-        <label>
-          {t('search.city')}
-          <select value={f.city} onChange={set('city')}>
-            <option value="">{t('common.all')}</option>
-            {cityOptions.map((c) => <option key={c.id} value={c.id}>{c.names[lang]}</option>)}
-          </select>
-        </label>
+        <div className="filter-field">
+          <label htmlFor="f-city">{t('search.city')}</label>
+          <SearchSelect
+            id="f-city"
+            value={f.city}
+            onChange={(v) => setF((p) => ({ ...p, city: v }))}
+            options={cityOpts}
+            placeholder={t('common.all')}
+            clearable
+          />
+        </div>
 
         <label>
           {t('search.neighborhood')}
