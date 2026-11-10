@@ -296,3 +296,8 @@ legend { font-weight: 700; padding: 0 8px; color: var(--accent-dark); }
 .picker-empty { padding: 14px 10px; color: var(--muted); text-align: center; }
 .filter-field { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .filter-field > label { font-size: .8rem; font-weight: 600; color: var(--muted); }
+
+/* ---------- "not in the list" suggestions ---------- */
+.link-btn { align-self: flex-start; background: none; border: 0; padding: 4px 0; min-height: 32px; color: var(--accent-dark); font: inherit; font-size: .82rem; text-decoration: underline; cursor: pointer; }
+.suggest-box { display: flex; flex-direction: column; gap: 12px; padding: 12px; border: 1px dashed var(--border); border-radius: 10px; background: var(--accent-soft); }
+.hint.review { color: #8a5a00; }

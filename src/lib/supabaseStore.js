@@ -26,6 +26,13 @@ export const supabaseStore = {
     if (error) throw error;
   },
 
+  // A submission that contains a name not in our lists (new city, neighborhood or product).
+  // It waits in public.pending_submissions (write-only for visitors) until it is reviewed.
+  async addPending(payload) {
+    const { error } = await supabase.from('pending_submissions').insert({ payload });
+    if (error) throw error;
+  },
+
   // Server-side pagination: only one page travels over the network.
   async listPrices(filters = {}, { page = 1, pageSize = 10 } = {}) {
     const from = (page - 1) * pageSize;

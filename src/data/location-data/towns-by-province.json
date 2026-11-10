@@ -1,0 +1,1556 @@
+[
+ {
+  "id": "agadir",
+  "province": "Agadir-Ida-Ou-Tanane",
+  "en": "Agadir",
+  "fr": "Agadir",
+  "ar": "أكادير"
+ },
+ {
+  "id": "tamraght",
+  "province": "Agadir-Ida-Ou-Tanane",
+  "en": "Tamraght",
+  "fr": "Tamraght",
+  "ar": "تامراغت"
+ },
+ {
+  "id": "taghazout",
+  "province": "Agadir-Ida-Ou-Tanane",
+  "en": "Taghazout",
+  "fr": "Taghazout",
+  "ar": "تغازوت"
+ },
+ {
+  "id": "aourir",
+  "province": "Agadir-Ida-Ou-Tanane",
+  "en": "Aourir",
+  "fr": "Aourir",
+  "ar": "أورير"
+ },
+ {
+  "id": "tahannaout",
+  "province": "Al Haouz",
+  "en": "Tahannaout",
+  "fr": "Tahannaout",
+  "ar": "تحناوت"
+ },
+ {
+  "id": "asni",
+  "province": "Al Haouz",
+  "en": "Asni",
+  "fr": "Asni",
+  "ar": "أسني"
+ },
+ {
+  "id": "amizmiz",
+  "province": "Al Haouz",
+  "en": "Amizmiz",
+  "fr": "Amizmiz",
+  "ar": "أمزميز"
+ },
+ {
+  "id": "ait-ourir",
+  "province": "Al Haouz",
+  "en": "Ait Ourir",
+  "fr": "Aït Ourir",
+  "ar": "آيت أورير"
+ },
+ {
+  "id": "imlil",
+  "province": "Al Haouz",
+  "en": "Imlil",
+  "fr": "Imlil",
+  "ar": "إمليل"
+ },
+ {
+  "id": "al-hoceima",
+  "province": "Al Hoceima",
+  "en": "Al Hoceima",
+  "fr": "Al Hoceïma",
+  "ar": "الحسيمة"
+ },
+ {
+  "id": "imzouren",
+  "province": "Al Hoceima",
+  "en": "Imzouren",
+  "fr": "Imzouren",
+  "ar": "إمزورن"
+ },
+ {
+  "id": "beni-bouayach",
+  "province": "Al Hoceima",
+  "en": "Beni Bouayach",
+  "fr": "Beni Bouayach",
+  "ar": "بني بوعياش"
+ },
+ {
+  "id": "targuist",
+  "province": "Al Hoceima",
+  "en": "Targuist",
+  "fr": "Targuist",
+  "ar": "تارجيست"
+ },
+ {
+  "id": "ajdir",
+  "province": "Al Hoceima",
+  "en": "Ajdir",
+  "fr": "Ajdir",
+  "ar": "أجدير"
+ },
+ {
+  "id": "ketama",
+  "province": "Al Hoceima",
+  "en": "Ketama",
+  "fr": "Ketama",
+  "ar": "كتامة"
+ },
+ {
+  "id": "aousserd",
+  "province": "Aousserd",
+  "en": "Aousserd",
+  "fr": "Aousserd",
+  "ar": "أوسرد"
+ },
+ {
+  "id": "assa",
+  "province": "Assa-Zag",
+  "en": "Assa",
+  "fr": "Assa",
+  "ar": "أسا"
+ },
+ {
+  "id": "zag",
+  "province": "Assa-Zag",
+  "en": "Zag",
+  "fr": "Zag",
+  "ar": "الزاك"
+ },
+ {
+  "id": "azilal",
+  "province": "Azilal",
+  "en": "Azilal",
+  "fr": "Azilal",
+  "ar": "أزيلال"
+ },
+ {
+  "id": "demnate",
+  "province": "Azilal",
+  "en": "Demnate",
+  "fr": "Demnate",
+  "ar": "دمنات"
+ },
+ {
+  "id": "afourer",
+  "province": "Azilal",
+  "en": "Afourer",
+  "fr": "Afourer",
+  "ar": "أفورار"
+ },
+ {
+  "id": "ouaouizeght",
+  "province": "Azilal",
+  "en": "Ouaouizeght",
+  "fr": "Ouaouizeght",
+  "ar": "واويزغت"
+ },
+ {
+  "id": "beni-mellal",
+  "province": "Beni Mellal",
+  "en": "Beni Mellal",
+  "fr": "Béni Mellal",
+  "ar": "بني ملال"
+ },
+ {
+  "id": "kasba-tadla",
+  "province": "Beni Mellal",
+  "en": "Kasba Tadla",
+  "fr": "Kasba Tadla",
+  "ar": "قصبة تادلة"
+ },
+ {
+  "id": "zaouiat-cheikh",
+  "province": "Beni Mellal",
+  "en": "Zaouiat Cheikh",
+  "fr": "Zaouiat Cheikh",
+  "ar": "زاوية الشيخ"
+ },
+ {
+  "id": "benslimane",
+  "province": "Benslimane",
+  "en": "Benslimane",
+  "fr": "Benslimane",
+  "ar": "بنسليمان"
+ },
+ {
+  "id": "bouznika",
+  "province": "Benslimane",
+  "en": "Bouznika",
+  "fr": "Bouznika",
+  "ar": "بوزنيقة"
+ },
+ {
+  "id": "mansouria",
+  "province": "Benslimane",
+  "en": "Mansouria",
+  "fr": "Mansouria",
+  "ar": "المنصورية"
+ },
+ {
+  "id": "berkane",
+  "province": "Berkane",
+  "en": "Berkane",
+  "fr": "Berkane",
+  "ar": "بركان"
+ },
+ {
+  "id": "saidia",
+  "province": "Berkane",
+  "en": "Saidia",
+  "fr": "Saidia",
+  "ar": "السعيدية"
+ },
+ {
+  "id": "ahfir",
+  "province": "Berkane",
+  "en": "Ahfir",
+  "fr": "Ahfir",
+  "ar": "أحفير"
+ },
+ {
+  "id": "aklim",
+  "province": "Berkane",
+  "en": "Aklim",
+  "fr": "Aklim",
+  "ar": "أكليم"
+ },
+ {
+  "id": "berrechid",
+  "province": "Berrechid",
+  "en": "Berrechid",
+  "fr": "Berrechid",
+  "ar": "برشيد"
+ },
+ {
+  "id": "had-soualem",
+  "province": "Berrechid",
+  "en": "Had Soualem",
+  "fr": "Had Soualem",
+  "ar": "حد السوالم"
+ },
+ {
+  "id": "deroua",
+  "province": "Berrechid",
+  "en": "Deroua",
+  "fr": "Deroua",
+  "ar": "الدروة"
+ },
+ {
+  "id": "el-gara",
+  "province": "Berrechid",
+  "en": "El Gara",
+  "fr": "El Gara",
+  "ar": "الكارة"
+ },
+ {
+  "id": "boujdour",
+  "province": "Boujdour",
+  "en": "Boujdour",
+  "fr": "Boujdour",
+  "ar": "بوجدور"
+ },
+ {
+  "id": "boulemane",
+  "province": "Boulemane",
+  "en": "Boulemane",
+  "fr": "Boulemane",
+  "ar": "بولمان"
+ },
+ {
+  "id": "missour",
+  "province": "Boulemane",
+  "en": "Missour",
+  "fr": "Missour",
+  "ar": "ميسور"
+ },
+ {
+  "id": "outat-el-haj",
+  "province": "Boulemane",
+  "en": "Outat El Haj",
+  "fr": "Outat El Haj",
+  "ar": "أوطاط الحاج"
+ },
+ {
+  "id": "casablanca",
+  "province": "Casablanca",
+  "en": "Casablanca",
+  "fr": "Casablanca",
+  "ar": "الدار البيضاء"
+ },
+ {
+  "id": "chefchaouen",
+  "province": "Chefchaouen",
+  "en": "Chefchaouen",
+  "fr": "Chefchaouen",
+  "ar": "شفشاون"
+ },
+ {
+  "id": "bab-berred",
+  "province": "Chefchaouen",
+  "en": "Bab Berred",
+  "fr": "Bab Berred",
+  "ar": "باب برد"
+ },
+ {
+  "id": "bab-taza",
+  "province": "Chefchaouen",
+  "en": "Bab Taza",
+  "fr": "Bab Taza",
+  "ar": "باب تازة"
+ },
+ {
+  "id": "chichaoua",
+  "province": "Chichaoua",
+  "en": "Chichaoua",
+  "fr": "Chichaoua",
+  "ar": "شيشاوة"
+ },
+ {
+  "id": "imintanoute",
+  "province": "Chichaoua",
+  "en": "Imintanoute",
+  "fr": "Imintanoute",
+  "ar": "إمنتانوت"
+ },
+ {
+  "id": "biougra",
+  "province": "Chtouka-Ait Baha",
+  "en": "Biougra",
+  "fr": "Biougra",
+  "ar": "بيوكرى"
+ },
+ {
+  "id": "ait-baha",
+  "province": "Chtouka-Ait Baha",
+  "en": "Ait Baha",
+  "fr": "Aït Baha",
+  "ar": "آيت باها"
+ },
+ {
+  "id": "ait-amira",
+  "province": "Chtouka-Ait Baha",
+  "en": "Ait Amira",
+  "fr": "Aït Amira",
+  "ar": "آيت عميرة"
+ },
+ {
+  "id": "belfaa",
+  "province": "Chtouka-Ait Baha",
+  "en": "Belfaa",
+  "fr": "Belfaa",
+  "ar": "بلفاع"
+ },
+ {
+  "id": "sidi-bibi",
+  "province": "Chtouka-Ait Baha",
+  "en": "Sidi Bibi",
+  "fr": "Sidi Bibi",
+  "ar": "سيدي بيبي"
+ },
+ {
+  "id": "driouch",
+  "province": "Driouch",
+  "en": "Driouch",
+  "fr": "Driouch",
+  "ar": "الدريوش"
+ },
+ {
+  "id": "midar",
+  "province": "Driouch",
+  "en": "Midar",
+  "fr": "Midar",
+  "ar": "ميضار"
+ },
+ {
+  "id": "ben-taieb",
+  "province": "Driouch",
+  "en": "Ben Taieb",
+  "fr": "Ben Taieb",
+  "ar": "بن الطيب"
+ },
+ {
+  "id": "el-hajeb",
+  "province": "El Hajeb",
+  "en": "El Hajeb",
+  "fr": "El Hajeb",
+  "ar": "الحاجب"
+ },
+ {
+  "id": "ain-taoujdate",
+  "province": "El Hajeb",
+  "en": "Ain Taoujdate",
+  "fr": "Aïn Taoujdate",
+  "ar": "عين تاوجطات"
+ },
+ {
+  "id": "agourai",
+  "province": "El Hajeb",
+  "en": "Agourai",
+  "fr": "Agourai",
+  "ar": "أكوراي"
+ },
+ {
+  "id": "sabaa-aiyoun",
+  "province": "El Hajeb",
+  "en": "Sabaa Aiyoun",
+  "fr": "Sebaa Aioun",
+  "ar": "سبع عيون"
+ },
+ {
+  "id": "el-jadida",
+  "province": "El Jadida",
+  "en": "El Jadida",
+  "fr": "El Jadida",
+  "ar": "الجديدة"
+ },
+ {
+  "id": "azemmour",
+  "province": "El Jadida",
+  "en": "Azemmour",
+  "fr": "Azemmour",
+  "ar": "أزمور"
+ },
+ {
+  "id": "oualidia",
+  "province": "El Jadida",
+  "en": "Oualidia",
+  "fr": "Oualidia",
+  "ar": "الوليدية"
+ },
+ {
+  "id": "moulay-abdallah",
+  "province": "El Jadida",
+  "en": "Moulay Abdallah",
+  "fr": "Moulay Abdallah",
+  "ar": "مولاي عبد الله"
+ },
+ {
+  "id": "sidi-bouzid",
+  "province": "El Jadida",
+  "en": "Sidi Bouzid",
+  "fr": "Sidi Bouzid",
+  "ar": "سيدي بوزيد"
+ },
+ {
+  "id": "el-kelaa-des-sraghna",
+  "province": "El Kelaa Des-Sraghna",
+  "en": "El Kelaa des Sraghna",
+  "fr": "El Kelâa des Sraghna",
+  "ar": "قلعة السراغنة"
+ },
+ {
+  "id": "errachidia",
+  "province": "Errachidia",
+  "en": "Errachidia",
+  "fr": "Errachidia",
+  "ar": "الرشيدية"
+ },
+ {
+  "id": "erfoud",
+  "province": "Errachidia",
+  "en": "Erfoud",
+  "fr": "Erfoud",
+  "ar": "أرفود"
+ },
+ {
+  "id": "rissani",
+  "province": "Errachidia",
+  "en": "Rissani",
+  "fr": "Rissani",
+  "ar": "الريصاني"
+ },
+ {
+  "id": "goulmima",
+  "province": "Errachidia",
+  "en": "Goulmima",
+  "fr": "Goulmima",
+  "ar": "كلميمة"
+ },
+ {
+  "id": "merzouga",
+  "province": "Errachidia",
+  "en": "Merzouga",
+  "fr": "Merzouga",
+  "ar": "مرزوكة"
+ },
+ {
+  "id": "essaouira",
+  "province": "Essaouira",
+  "en": "Essaouira",
+  "fr": "Essaouira",
+  "ar": "الصويرة"
+ },
+ {
+  "id": "tamanar",
+  "province": "Essaouira",
+  "en": "Tamanar",
+  "fr": "Tamanar",
+  "ar": "تمنار"
+ },
+ {
+  "id": "smimou",
+  "province": "Essaouira",
+  "en": "Smimou",
+  "fr": "Smimou",
+  "ar": "سميمو"
+ },
+ {
+  "id": "ounagha",
+  "province": "Essaouira",
+  "en": "Ounagha",
+  "fr": "Ounagha",
+  "ar": "أوناغة"
+ },
+ {
+  "id": "sidi-kaouki",
+  "province": "Essaouira",
+  "en": "Sidi Kaouki",
+  "fr": "Sidi Kaouki",
+  "ar": "سيدي كاوكي"
+ },
+ {
+  "id": "es-semara",
+  "province": "Es-Semara",
+  "en": "Es-Semara",
+  "fr": "Smara",
+  "ar": "السمارة"
+ },
+ {
+  "id": "ksar-sghir",
+  "province": "Fahs-Anjra",
+  "en": "Ksar Sghir",
+  "fr": "Ksar Sghir",
+  "ar": "القصر الصغير"
+ },
+ {
+  "id": "anjra",
+  "province": "Fahs-Anjra",
+  "en": "Anjra",
+  "fr": "Anjra",
+  "ar": "أنجرة"
+ },
+ {
+  "id": "fes",
+  "province": "Fes",
+  "en": "Fes",
+  "fr": "Fès",
+  "ar": "فاس"
+ },
+ {
+  "id": "figuig",
+  "province": "Figuig",
+  "en": "Figuig",
+  "fr": "Figuig",
+  "ar": "فجيج"
+ },
+ {
+  "id": "bouarfa",
+  "province": "Figuig",
+  "en": "Bouarfa",
+  "fr": "Bouarfa",
+  "ar": "بوعرفة"
+ },
+ {
+  "id": "bouanane",
+  "province": "Figuig",
+  "en": "Bouanane",
+  "fr": "Bouanane",
+  "ar": "بوعنان"
+ },
+ {
+  "id": "tendrara",
+  "province": "Figuig",
+  "en": "Tendrara",
+  "fr": "Tendrara",
+  "ar": "تندرارة"
+ },
+ {
+  "id": "fquih-ben-salah",
+  "province": "Fquih Ben Salah",
+  "en": "Fquih Ben Salah",
+  "fr": "Fquih Ben Salah",
+  "ar": "الفقيه بن صالح"
+ },
+ {
+  "id": "souk-sebt-ouled-nemma",
+  "province": "Fquih Ben Salah",
+  "en": "Souk Sebt Ouled Nemma",
+  "fr": "Souk Sebt Ouled Nemma",
+  "ar": "سوق السبت أولاد النمة"
+ },
+ {
+  "id": "guelmim",
+  "province": "Guelmim",
+  "en": "Guelmim",
+  "fr": "Guelmim",
+  "ar": "كلميم"
+ },
+ {
+  "id": "bouizakarne",
+  "province": "Guelmim",
+  "en": "Bouizakarne",
+  "fr": "Bouizakarne",
+  "ar": "بويزكارن"
+ },
+ {
+  "id": "fask",
+  "province": "Guelmim",
+  "en": "Fask",
+  "fr": "Fask",
+  "ar": "فاسك"
+ },
+ {
+  "id": "guercif",
+  "province": "Guercif",
+  "en": "Guercif",
+  "fr": "Guercif",
+  "ar": "جرسيف"
+ },
+ {
+  "id": "ifrane",
+  "province": "Ifrane",
+  "en": "Ifrane",
+  "fr": "Ifrane",
+  "ar": "إفران"
+ },
+ {
+  "id": "azrou",
+  "province": "Ifrane",
+  "en": "Azrou",
+  "fr": "Azrou",
+  "ar": "أزرو"
+ },
+ {
+  "id": "timahdite",
+  "province": "Ifrane",
+  "en": "Timahdite",
+  "fr": "Timahdite",
+  "ar": "تيمحضيت"
+ },
+ {
+  "id": "ain-leuh",
+  "province": "Ifrane",
+  "en": "Ain Leuh",
+  "fr": "Aïn Leuh",
+  "ar": "عين اللوح"
+ },
+ {
+  "id": "inezgane",
+  "province": "Inezgane-Ait Melloul",
+  "en": "Inezgane",
+  "fr": "Inezgane",
+  "ar": "إنزكان"
+ },
+ {
+  "id": "ait-melloul",
+  "province": "Inezgane-Ait Melloul",
+  "en": "Ait Melloul",
+  "fr": "Aït Melloul",
+  "ar": "آيت ملول"
+ },
+ {
+  "id": "dcheira-el-jihadia",
+  "province": "Inezgane-Ait Melloul",
+  "en": "Dcheira El Jihadia",
+  "fr": "Dcheira El Jihadia",
+  "ar": "الدشيرة الجهادية"
+ },
+ {
+  "id": "temsia",
+  "province": "Inezgane-Ait Melloul",
+  "en": "Temsia",
+  "fr": "Temsia",
+  "ar": "التمسية"
+ },
+ {
+  "id": "lqliaa",
+  "province": "Inezgane-Ait Melloul",
+  "en": "Lqliaa",
+  "fr": "Lqliaa",
+  "ar": "القليعة"
+ },
+ {
+  "id": "jerada",
+  "province": "Jerada",
+  "en": "Jerada",
+  "fr": "Jerada",
+  "ar": "جرادة"
+ },
+ {
+  "id": "touissit",
+  "province": "Jerada",
+  "en": "Touissit",
+  "fr": "Touissit",
+  "ar": "توسيت"
+ },
+ {
+  "id": "ain-beni-mathar",
+  "province": "Jerada",
+  "en": "Ain Beni Mathar",
+  "fr": "Aïn Béni Mathar",
+  "ar": "عين بني مطهر"
+ },
+ {
+  "id": "kenitra",
+  "province": "Kenitra",
+  "en": "Kenitra",
+  "fr": "Kénitra",
+  "ar": "القنيطرة"
+ },
+ {
+  "id": "mehdia",
+  "province": "Kenitra",
+  "en": "Mehdia",
+  "fr": "Mehdia",
+  "ar": "المهدية"
+ },
+ {
+  "id": "souk-el-arbaa",
+  "province": "Kenitra",
+  "en": "Souk El Arbaa",
+  "fr": "Souk El Arbaa du Gharb",
+  "ar": "سوق الأربعاء"
+ },
+ {
+  "id": "sidi-yahya-el-gharb",
+  "province": "Kenitra",
+  "en": "Sidi Yahya El Gharb",
+  "fr": "Sidi Yahya El Gharb",
+  "ar": "سيدي يحيى الغرب"
+ },
+ {
+  "id": "arbaoua",
+  "province": "Kenitra",
+  "en": "Arbaoua",
+  "fr": "Arbaoua",
+  "ar": "عرباوة"
+ },
+ {
+  "id": "khemisset",
+  "province": "Khemisset",
+  "en": "Khemisset",
+  "fr": "Khémisset",
+  "ar": "الخميسات"
+ },
+ {
+  "id": "tiflet",
+  "province": "Khemisset",
+  "en": "Tiflet",
+  "fr": "Tiflet",
+  "ar": "تيفلت"
+ },
+ {
+  "id": "rommani",
+  "province": "Khemisset",
+  "en": "Rommani",
+  "fr": "Rommani",
+  "ar": "الروماني"
+ },
+ {
+  "id": "oulmes",
+  "province": "Khemisset",
+  "en": "Oulmes",
+  "fr": "Oulmès",
+  "ar": "أولماس"
+ },
+ {
+  "id": "maaziz",
+  "province": "Khemisset",
+  "en": "Maaziz",
+  "fr": "Maaziz",
+  "ar": "معازيز"
+ },
+ {
+  "id": "sidi-allal-el-bahraoui",
+  "province": "Khemisset",
+  "en": "Sidi Allal El Bahraoui",
+  "fr": "Sidi Allal El Bahraoui",
+  "ar": "سيدي علال البحراوي"
+ },
+ {
+  "id": "khenifra",
+  "province": "Khenifra",
+  "en": "Khenifra",
+  "fr": "Khénifra",
+  "ar": "خنيفرة"
+ },
+ {
+  "id": "mrirt",
+  "province": "Khenifra",
+  "en": "Mrirt",
+  "fr": "Mrirt",
+  "ar": "مريرت"
+ },
+ {
+  "id": "el-kbab",
+  "province": "Khenifra",
+  "en": "El Kbab",
+  "fr": "El Kbab",
+  "ar": "القباب"
+ },
+ {
+  "id": "khouribga",
+  "province": "Khouribga",
+  "en": "Khouribga",
+  "fr": "Khouribga",
+  "ar": "خريبكة"
+ },
+ {
+  "id": "oued-zem",
+  "province": "Khouribga",
+  "en": "Oued Zem",
+  "fr": "Oued Zem",
+  "ar": "وادي زم"
+ },
+ {
+  "id": "boujniba",
+  "province": "Khouribga",
+  "en": "Boujniba",
+  "fr": "Boujniba",
+  "ar": "بوجنيبة"
+ },
+ {
+  "id": "bejaad",
+  "province": "Khouribga",
+  "en": "Bejaad",
+  "fr": "Bejaad",
+  "ar": "بجعد"
+ },
+ {
+  "id": "laayoune",
+  "province": "Laayoune",
+  "en": "Laayoune",
+  "fr": "Laâyoune",
+  "ar": "العيون"
+ },
+ {
+  "id": "foum-el-oued",
+  "province": "Laayoune",
+  "en": "Foum El Oued",
+  "fr": "Foum El Oued",
+  "ar": "فم الواد"
+ },
+ {
+  "id": "larache",
+  "province": "Larache",
+  "en": "Larache",
+  "fr": "Larache",
+  "ar": "العرائش"
+ },
+ {
+  "id": "ksar-el-kebir",
+  "province": "Larache",
+  "en": "Ksar El Kebir",
+  "fr": "Ksar El Kebir",
+  "ar": "القصر الكبير"
+ },
+ {
+  "id": "marrakech",
+  "province": "Marrakech",
+  "en": "Marrakech",
+  "fr": "Marrakech",
+  "ar": "مراكش"
+ },
+ {
+  "id": "mdiq",
+  "province": "M'diq-Fnideq",
+  "en": "M'diq",
+  "fr": "M'diq",
+  "ar": "المضيق"
+ },
+ {
+  "id": "fnideq",
+  "province": "M'diq-Fnideq",
+  "en": "Fnideq",
+  "fr": "Fnideq",
+  "ar": "الفنيدق"
+ },
+ {
+  "id": "mediouna",
+  "province": "Mediouna",
+  "en": "Mediouna",
+  "fr": "Médiouna",
+  "ar": "مديونة"
+ },
+ {
+  "id": "tit-mellil",
+  "province": "Mediouna",
+  "en": "Tit Mellil",
+  "fr": "Tit Mellil",
+  "ar": "تيط مليل"
+ },
+ {
+  "id": "sidi-hajjaj-oued-hassar",
+  "province": "Mediouna",
+  "en": "Sidi Hajjaj Oued Hassar",
+  "fr": "Sidi Hajjaj Oued Hassar",
+  "ar": "سيدي حجاج واد حصار"
+ },
+ {
+  "id": "lahraouyine",
+  "province": "Mediouna",
+  "en": "Lahraouyine",
+  "fr": "Lahraouyine",
+  "ar": "الهراويين"
+ },
+ {
+  "id": "meknes",
+  "province": "Meknes",
+  "en": "Meknes",
+  "fr": "Meknès",
+  "ar": "مكناس"
+ },
+ {
+  "id": "toulal",
+  "province": "Meknes",
+  "en": "Toulal",
+  "fr": "Toulal",
+  "ar": "تولال"
+ },
+ {
+  "id": "midelt",
+  "province": "Midelt",
+  "en": "Midelt",
+  "fr": "Midelt",
+  "ar": "ميدلت"
+ },
+ {
+  "id": "er-rich",
+  "province": "Midelt",
+  "en": "Er-Rich",
+  "fr": "Rich",
+  "ar": "الريش"
+ },
+ {
+  "id": "itzer",
+  "province": "Midelt",
+  "en": "Itzer",
+  "fr": "Itzer",
+  "ar": "إيتزر"
+ },
+ {
+  "id": "mohammedia",
+  "province": "Mohammadia",
+  "en": "Mohammedia",
+  "fr": "Mohammedia",
+  "ar": "المحمدية"
+ },
+ {
+  "id": "ain-harrouda",
+  "province": "Mohammadia",
+  "en": "Ain Harrouda",
+  "fr": "Ain Harrouda",
+  "ar": "عين حرودة"
+ },
+ {
+  "id": "bni-yakhlef",
+  "province": "Mohammadia",
+  "en": "Bni Yakhlef",
+  "fr": "Bni Yakhlef",
+  "ar": "بني يخلف"
+ },
+ {
+  "id": "moulay-yacoub",
+  "province": "Moulay Yacoub",
+  "en": "Moulay Yacoub",
+  "fr": "Moulay Yacoub",
+  "ar": "مولاي يعقوب"
+ },
+ {
+  "id": "nador",
+  "province": "Nador",
+  "en": "Nador",
+  "fr": "Nador",
+  "ar": "الناظور"
+ },
+ {
+  "id": "beni-ansar",
+  "province": "Nador",
+  "en": "Beni Ansar",
+  "fr": "Beni Ensar",
+  "ar": "بني أنصار"
+ },
+ {
+  "id": "selouane",
+  "province": "Nador",
+  "en": "Selouane",
+  "fr": "Selouane",
+  "ar": "سلوان"
+ },
+ {
+  "id": "zaio",
+  "province": "Nador",
+  "en": "Zaio",
+  "fr": "Zaio",
+  "ar": "زايو"
+ },
+ {
+  "id": "al-aaroui",
+  "province": "Nador",
+  "en": "Al Aaroui",
+  "fr": "Al Aaroui",
+  "ar": "العروي"
+ },
+ {
+  "id": "zeghanghan",
+  "province": "Nador",
+  "en": "Zeghanghan",
+  "fr": "Zeghanghan",
+  "ar": "زغنغان"
+ },
+ {
+  "id": "nouaceur",
+  "province": "Nouaceur",
+  "en": "Nouaceur",
+  "fr": "Nouaceur",
+  "ar": "النواصر"
+ },
+ {
+  "id": "bouskoura",
+  "province": "Nouaceur",
+  "en": "Bouskoura",
+  "fr": "Bouskoura",
+  "ar": "بوسكورة"
+ },
+ {
+  "id": "dar-bouazza",
+  "province": "Nouaceur",
+  "en": "Dar Bouazza",
+  "fr": "Dar Bouazza",
+  "ar": "دار بوعزة"
+ },
+ {
+  "id": "ouled-salah",
+  "province": "Nouaceur",
+  "en": "Ouled Salah",
+  "fr": "Ouled Salah",
+  "ar": "أولاد صالح"
+ },
+ {
+  "id": "ouarzazate",
+  "province": "Ouarzazate",
+  "en": "Ouarzazate",
+  "fr": "Ouarzazate",
+  "ar": "ورزازات"
+ },
+ {
+  "id": "taznakht",
+  "province": "Ouarzazate",
+  "en": "Taznakht",
+  "fr": "Taznakht",
+  "ar": "تازناخت"
+ },
+ {
+  "id": "skoura",
+  "province": "Ouarzazate",
+  "en": "Skoura",
+  "fr": "Skoura",
+  "ar": "سكورة"
+ },
+ {
+  "id": "dakhla",
+  "province": "Oued Ed-Dahab",
+  "en": "Dakhla",
+  "fr": "Dakhla",
+  "ar": "الداخلة"
+ },
+ {
+  "id": "ouezzane",
+  "province": "Ouezzane",
+  "en": "Ouezzane",
+  "fr": "Ouezzane",
+  "ar": "وزان"
+ },
+ {
+  "id": "oujda",
+  "province": "Oujda-Angad",
+  "en": "Oujda",
+  "fr": "Oujda",
+  "ar": "وجدة"
+ },
+ {
+  "id": "rabat",
+  "province": "Rabat",
+  "en": "Rabat",
+  "fr": "Rabat",
+  "ar": "الرباط"
+ },
+ {
+  "id": "benguerir",
+  "province": "Rehamna",
+  "en": "Benguerir",
+  "fr": "Ben Guerir",
+  "ar": "بنجرير"
+ },
+ {
+  "id": "sidi-bou-othmane",
+  "province": "Rehamna",
+  "en": "Sidi Bou Othmane",
+  "fr": "Sidi Bou Othmane",
+  "ar": "سيدي بوعثمان"
+ },
+ {
+  "id": "skhour-rehamna",
+  "province": "Rehamna",
+  "en": "Skhour Rehamna",
+  "fr": "Skhour Rehamna",
+  "ar": "سخور الرحامنة"
+ },
+ {
+  "id": "safi",
+  "province": "Safi",
+  "en": "Safi",
+  "fr": "Safi",
+  "ar": "آسفي"
+ },
+ {
+  "id": "jamaat-shaim",
+  "province": "Safi",
+  "en": "Jamaat Shaim",
+  "fr": "Jemâa Shaïm",
+  "ar": "جماعة شعيم"
+ },
+ {
+  "id": "sale",
+  "province": "Sale",
+  "en": "Sale",
+  "fr": "Salé",
+  "ar": "سلا"
+ },
+ {
+  "id": "sefrou",
+  "province": "Sefrou",
+  "en": "Sefrou",
+  "fr": "Sefrou",
+  "ar": "صفرو"
+ },
+ {
+  "id": "imouzzer-kandar",
+  "province": "Sefrou",
+  "en": "Imouzzer Kandar",
+  "fr": "Imouzzer Kandar",
+  "ar": "إيموزار كندر"
+ },
+ {
+  "id": "bhalil",
+  "province": "Sefrou",
+  "en": "Bhalil",
+  "fr": "Bhalil",
+  "ar": "البهاليل"
+ },
+ {
+  "id": "el-menzel",
+  "province": "Sefrou",
+  "en": "El Menzel",
+  "fr": "El Menzel",
+  "ar": "المنزل"
+ },
+ {
+  "id": "settat",
+  "province": "Settat",
+  "en": "Settat",
+  "fr": "Settat",
+  "ar": "سطات"
+ },
+ {
+  "id": "ben-ahmed",
+  "province": "Settat",
+  "en": "Ben Ahmed",
+  "fr": "Ben Ahmed",
+  "ar": "ابن أحمد"
+ },
+ {
+  "id": "sidi-bennour",
+  "province": "Sidi Bennour",
+  "en": "Sidi Bennour",
+  "fr": "Sidi Bennour",
+  "ar": "سيدي بنور"
+ },
+ {
+  "id": "zemamra",
+  "province": "Sidi Bennour",
+  "en": "Zemamra",
+  "fr": "Zemamra",
+  "ar": "زمامرة"
+ },
+ {
+  "id": "sidi-ifni",
+  "province": "Sidi Ifni",
+  "en": "Sidi Ifni",
+  "fr": "Sidi Ifni",
+  "ar": "سيدي إفني"
+ },
+ {
+  "id": "mirleft",
+  "province": "Sidi Ifni",
+  "en": "Mirleft",
+  "fr": "Mirleft",
+  "ar": "ميرلفت"
+ },
+ {
+  "id": "sidi-kacem",
+  "province": "Sidi Kacem",
+  "en": "Sidi Kacem",
+  "fr": "Sidi Kacem",
+  "ar": "سيدي قاسم"
+ },
+ {
+  "id": "mechra-bel-ksiri",
+  "province": "Sidi Kacem",
+  "en": "Mechra Bel Ksiri",
+  "fr": "Mechra Bel Ksiri",
+  "ar": "مشرع بلقصيري"
+ },
+ {
+  "id": "sidi-slimane",
+  "province": "Sidi Slimane",
+  "en": "Sidi Slimane",
+  "fr": "Sidi Slimane",
+  "ar": "سيدي سليمان"
+ },
+ {
+  "id": "temara",
+  "province": "Skhirate-Temara",
+  "en": "Temara",
+  "fr": "Témara",
+  "ar": "تمارة"
+ },
+ {
+  "id": "skhirate",
+  "province": "Skhirate-Temara",
+  "en": "Skhirate",
+  "fr": "Skhirat",
+  "ar": "الصخيرات"
+ },
+ {
+  "id": "ain-attig",
+  "province": "Skhirate-Temara",
+  "en": "Ain Attig",
+  "fr": "Aïn Attig",
+  "ar": "عين عتيق"
+ },
+ {
+  "id": "ain-el-aouda",
+  "province": "Skhirate-Temara",
+  "en": "Ain El Aouda",
+  "fr": "Aïn El Aouda",
+  "ar": "عين العودة"
+ },
+ {
+  "id": "tangier",
+  "province": "Tanger-Assilah",
+  "en": "Tangier",
+  "fr": "Tanger",
+  "ar": "طنجة"
+ },
+ {
+  "id": "assilah",
+  "province": "Tanger-Assilah",
+  "en": "Assilah",
+  "fr": "Asilah",
+  "ar": "أصيلة"
+ },
+ {
+  "id": "tan-tan",
+  "province": "Tan-Tan",
+  "en": "Tan-Tan",
+  "fr": "Tan-Tan",
+  "ar": "طانطان"
+ },
+ {
+  "id": "el-ouatia",
+  "province": "Tan-Tan",
+  "en": "El Ouatia",
+  "fr": "El Ouatia",
+  "ar": "الوطية"
+ },
+ {
+  "id": "taounate",
+  "province": "Taounate",
+  "en": "Taounate",
+  "fr": "Taounate",
+  "ar": "تاونات"
+ },
+ {
+  "id": "karia-ba-mohamed",
+  "province": "Taounate",
+  "en": "Karia Ba Mohamed",
+  "fr": "Karia Ba Mohamed",
+  "ar": "قرية با محمد"
+ },
+ {
+  "id": "ghafsai",
+  "province": "Taounate",
+  "en": "Ghafsai",
+  "fr": "Ghafsai",
+  "ar": "غفساي"
+ },
+ {
+  "id": "tahar-souk",
+  "province": "Taounate",
+  "en": "Tahar Souk",
+  "fr": "Tahar Souk",
+  "ar": "الطاهر السوق"
+ },
+ {
+  "id": "jorf-el-melha",
+  "province": "Taounate",
+  "en": "Jorf El Melha",
+  "fr": "Jorf El Melha",
+  "ar": "جرف الملحة"
+ },
+ {
+  "id": "taourirt",
+  "province": "Taourirt",
+  "en": "Taourirt",
+  "fr": "Taourirt",
+  "ar": "تاوريرت"
+ },
+ {
+  "id": "debdou",
+  "province": "Taourirt",
+  "en": "Debdou",
+  "fr": "Debdou",
+  "ar": "دبدو"
+ },
+ {
+  "id": "el-aioun-sidi-mellouk",
+  "province": "Taourirt",
+  "en": "El Aioun Sidi Mellouk",
+  "fr": "El Aïoun Sidi Mellouk",
+  "ar": "العيون سيدي ملوك"
+ },
+ {
+  "id": "tarfaya",
+  "province": "Tarfaya",
+  "en": "Tarfaya",
+  "fr": "Tarfaya",
+  "ar": "طرفاية"
+ },
+ {
+  "id": "taroudant",
+  "province": "Taroudannt",
+  "en": "Taroudant",
+  "fr": "Taroudant",
+  "ar": "تارودانت"
+ },
+ {
+  "id": "oulad-teima",
+  "province": "Taroudannt",
+  "en": "Oulad Teima",
+  "fr": "Oulad Teïma",
+  "ar": "أولاد تايمة"
+ },
+ {
+  "id": "irherm",
+  "province": "Taroudannt",
+  "en": "Irherm",
+  "fr": "Irherm",
+  "ar": "إيغرم"
+ },
+ {
+  "id": "taliouine",
+  "province": "Taroudannt",
+  "en": "Taliouine",
+  "fr": "Taliouine",
+  "ar": "تالوين"
+ },
+ {
+  "id": "aoulouz",
+  "province": "Taroudannt",
+  "en": "Aoulouz",
+  "fr": "Aoulouz",
+  "ar": "أولوز"
+ },
+ {
+  "id": "oulad-berhil",
+  "province": "Taroudannt",
+  "en": "Oulad Berhil",
+  "fr": "Oulad Berhil",
+  "ar": "أولاد برحيل"
+ },
+ {
+  "id": "tata",
+  "province": "Tata",
+  "en": "Tata",
+  "fr": "Tata",
+  "ar": "طاطا"
+ },
+ {
+  "id": "akka",
+  "province": "Tata",
+  "en": "Akka",
+  "fr": "Akka",
+  "ar": "أقا"
+ },
+ {
+  "id": "foum-zguid",
+  "province": "Tata",
+  "en": "Foum Zguid",
+  "fr": "Foum Zguid",
+  "ar": "فم زكيد"
+ },
+ {
+  "id": "foum-el-hisn",
+  "province": "Tata",
+  "en": "Foum El Hisn",
+  "fr": "Foum El Hisn",
+  "ar": "فم الحصن"
+ },
+ {
+  "id": "taza",
+  "province": "Taza",
+  "en": "Taza",
+  "fr": "Taza",
+  "ar": "تازة"
+ },
+ {
+  "id": "oued-amlil",
+  "province": "Taza",
+  "en": "Oued Amlil",
+  "fr": "Oued Amlil",
+  "ar": "واد أمليل"
+ },
+ {
+  "id": "tahla",
+  "province": "Taza",
+  "en": "Tahla",
+  "fr": "Tahla",
+  "ar": "تاهلة"
+ },
+ {
+  "id": "aknoul",
+  "province": "Taza",
+  "en": "Aknoul",
+  "fr": "Aknoul",
+  "ar": "أكنول"
+ },
+ {
+  "id": "tetouan",
+  "province": "Tetouan",
+  "en": "Tetouan",
+  "fr": "Tétouan",
+  "ar": "تطوان"
+ },
+ {
+  "id": "martil",
+  "province": "Tetouan",
+  "en": "Martil",
+  "fr": "Martil",
+  "ar": "مرتيل"
+ },
+ {
+  "id": "oued-laou",
+  "province": "Tetouan",
+  "en": "Oued Laou",
+  "fr": "Oued Laou",
+  "ar": "واد لاو"
+ },
+ {
+  "id": "tinghir",
+  "province": "Tinghir",
+  "en": "Tinghir",
+  "fr": "Tinghir",
+  "ar": "تنغير"
+ },
+ {
+  "id": "boumalne-dades",
+  "province": "Tinghir",
+  "en": "Boumalne Dades",
+  "fr": "Boumalne Dadès",
+  "ar": "بومالن دادس"
+ },
+ {
+  "id": "kelaat-mgouna",
+  "province": "Tinghir",
+  "en": "Kelaat M'Gouna",
+  "fr": "Kelaât M'Gouna",
+  "ar": "قلعة مكونة"
+ },
+ {
+  "id": "tinejdad",
+  "province": "Tinghir",
+  "en": "Tinejdad",
+  "fr": "Tinejdad",
+  "ar": "تنجداد"
+ },
+ {
+  "id": "alnif",
+  "province": "Tinghir",
+  "en": "Alnif",
+  "fr": "Alnif",
+  "ar": "ألنيف"
+ },
+ {
+  "id": "tiznit",
+  "province": "Tiznit",
+  "en": "Tiznit",
+  "fr": "Tiznit",
+  "ar": "تيزنيت"
+ },
+ {
+  "id": "tafraout",
+  "province": "Tiznit",
+  "en": "Tafraout",
+  "fr": "Tafraout",
+  "ar": "تافراوت"
+ },
+ {
+  "id": "anzi",
+  "province": "Tiznit",
+  "en": "Anzi",
+  "fr": "Anzi",
+  "ar": "أنزي"
+ },
+ {
+  "id": "youssoufia",
+  "province": "Youssoufia",
+  "en": "Youssoufia",
+  "fr": "Youssoufia",
+  "ar": "اليوسفية"
+ },
+ {
+  "id": "chemaia",
+  "province": "Youssoufia",
+  "en": "Chemaia",
+  "fr": "Chemaïa",
+  "ar": "الشماعية"
+ },
+ {
+  "id": "zagora",
+  "province": "Zagora",
+  "en": "Zagora",
+  "fr": "Zagora",
+  "ar": "زاكورة"
+ },
+ {
+  "id": "agdz",
+  "province": "Zagora",
+  "en": "Agdz",
+  "fr": "Agdz",
+  "ar": "أكدز"
+ },
+ {
+  "id": "tamegroute",
+  "province": "Zagora",
+  "en": "Tamegroute",
+  "fr": "Tamegroute",
+  "ar": "تامكروت"
+ },
+ {
+  "id": "mhamid-el-ghizlane",
+  "province": "Zagora",
+  "en": "M'hamid El Ghizlane",
+  "fr": "M'hamid El Ghizlane",
+  "ar": "امحاميد الغزلان"
+ }
+]
