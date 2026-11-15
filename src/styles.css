@@ -301,3 +301,25 @@ legend { font-weight: 700; padding: 0 8px; color: var(--accent-dark); }
 .link-btn { align-self: flex-start; background: none; border: 0; padding: 4px 0; min-height: 32px; color: var(--accent-dark); font: inherit; font-size: .82rem; text-decoration: underline; cursor: pointer; }
 .suggest-box { display: flex; flex-direction: column; gap: 12px; padding: 12px; border: 1px dashed var(--border); border-radius: 10px; background: var(--accent-soft); }
 .hint.review { color: #8a5a00; }
+
+/* ---------- admin dashboard (#/admin) ---------- */
+.admin { display: flex; flex-direction: column; gap: 16px; }
+.admin-bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.admin-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: clamp(12px, 2vw, 20px); display: flex; flex-direction: column; gap: 12px; }
+.admin-card-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.admin-card-head time { margin-inline-start: auto; }
+.admin-price { font-weight: 700; color: var(--accent-dark); }
+.admin-kv { display: grid; grid-template-columns: max-content 1fr; gap: 4px 16px; margin: 0; }
+.admin-kv dt { color: var(--muted); font-size: .85rem; }
+.admin-kv dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+.admin-resolve { display: flex; flex-direction: column; gap: 10px; padding: 12px; border: 1px dashed var(--border); border-radius: 10px; background: var(--accent-soft); }
+.badge-new { background: #fff3cd; color: #8a5a00; border-radius: 999px; padding: 2px 8px; font-size: .72rem; font-weight: 700; }
+.admin-modes { display: flex; gap: 8px; flex-wrap: wrap; }
+.chip { min-height: 40px; padding: 6px 12px; border: 1px solid var(--border); border-radius: 999px; background: var(--surface); font: inherit; font-size: .85rem; cursor: pointer; }
+.chip.on { border-color: var(--accent-dark); color: var(--accent-dark); font-weight: 700; }
+.admin-names, .admin-edit { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr)); gap: 12px; }
+.admin-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn.danger { background: transparent; color: var(--warn); border: 1px solid var(--warn); }
+.btn.ghost { background: transparent; color: var(--accent-dark); border: 1px solid var(--border); }
+.admin-actions .btn, .admin-bar .btn { width: auto; min-height: 44px; }
+.btn.danger:hover { background: var(--warn); color: #fff; }

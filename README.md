@@ -82,6 +82,28 @@ Review flow:
 A typed neighborhood is held only for cities that have a suggestion list in `neighborhoods.json`
 (switch: `HOLD_UNKNOWN_NEIGHBORHOODS` in `src/components/AddPriceForm.jsx`).
 
+## Admin dashboard (approve / reject from the app)
+
+Open `https://<your-site>/#/admin` (not linked from the menu). It lists the submissions waiting in
+`public.pending_submissions`. For each one you see the whole form and press **Approve** or **Reject**:
+
+- A new **city** or **product** is either created (you fill the en/fr/ar names; the id is suggested) or matched to an existing
+  one when it is just a typo. Created ones go to `extra_cities` / `extra_items` and the app adds them to its lists at start-up.
+- A new **neighborhood** can be corrected before approving. The unit can be corrected too.
+- Approve inserts the price into `public.prices` (with the original date), marks the row approved and, if needed, creates the
+  city/product, all in one database transaction. Reject only marks the row rejected.
+
+**One-time setup**
+1. Run the whole `supabase/schema.sql` again (section 6 is new).
+2. Supabase dashboard > Authentication > Users > *Add user* (email + password, tick auto-confirm).
+3. Authentication > Sign In / Providers > Email: turn **off** "Allow new users to sign up".
+4. In the SQL editor make that user an admin:
+   `insert into private.admins (user_id) select id from auth.users where email = 'you@example.com';`
+5. Sign in at `/#/admin`.
+
+Security: the page itself is public, but the database decides. `admin_list_pending()` and `admin_review()` refuse anyone who is
+not in `private.admins`, and the pending table cannot be read by visitors. `scripts/pending-to-sql.mjs` still works as a manual fallback.
+
 ## Known limits of the POC
 
 - No accounts: the rate limit is per IP, so many people behind one mobile-carrier address share a budget.

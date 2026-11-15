@@ -6,3 +6,8 @@ dist
 .DS_Store
 dummy-data/**
 user-entry/pending.js
+# admin exports: contain what visitors typed
+user-entry/
+pending.json
+supabase/approved.sql
+approved.sql
