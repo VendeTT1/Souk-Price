@@ -93,6 +93,8 @@ export const localStore = {
     } catch { /* storage unavailable: nothing to keep in demo mode */ }
   },
 
+  async getExtras() { return { items: [], cities: [] }; },
+
   async listPrices(filters = {}, { page = 1, pageSize = 10 } = {}) {
     const all = filterRows(read(), filters).sort((a, b) => b.created_at.localeCompare(a.created_at));
     return { rows: all.slice((page - 1) * pageSize, page * pageSize), total: all.length };

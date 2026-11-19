@@ -94,7 +94,8 @@ begin
             coalesce(v_headers ->> 'cf-connecting-ip', v_headers ->> 'x-forwarded-for', ''), ',', 1)), '');
 
   -- no IP known (SQL editor, seed script): skip the rate limit instead of blocking everybody
-  if v_ip is not null then
+  -- (admin approvals set app.skip_limits for their own transaction, see section 6)
+  if v_ip is not null and coalesce(current_setting('app.skip_limits', true), '') <> 'on' then
     v_hash := md5(v_ip || (select value from private.settings where key = 'ip_salt'));
 
     select count(*) filter (where created_at > now() - interval '1 hour'), count(*)
@@ -213,12 +214,12 @@ create policy "public insert" on public.prices for insert with check (true);
 
 -- Insert is allowed on the form's columns only: id, created_at, hidden and suspect stay out of reach.
 revoke insert on public.prices from anon, authenticated;
-grant select on public.prices to anon;
+grant select on public.prices to anon, authenticated;
 grant insert (region, city, neighborhood, market_type, market_name, category, item, price, unit, rating, comment)
-  on public.prices to anon;
+  on public.prices to anon, authenticated;
 
-grant select on public.price_summary to anon;
-grant execute on function public.search_stats(text, text, text, text, text, smallint) to anon;
+grant select on public.price_summary to anon, authenticated;
+grant execute on function public.search_stats(text, text, text, text, text, smallint) to anon, authenticated;
 
 -- =====================================================================
 -- 5. Review queue: submissions that contain a name we do not know yet
@@ -316,7 +317,173 @@ drop policy if exists "public insert pending" on public.pending_submissions;
 create policy "public insert pending" on public.pending_submissions for insert with check (true);
 -- no select / update / delete policy and no grant: visitors can write here but never read it
 revoke all on public.pending_submissions from anon, authenticated;
-grant insert (payload) on public.pending_submissions to anon;
+grant insert (payload) on public.pending_submissions to anon, authenticated;
+
+-- =====================================================================
+-- 6. Admin review: approve / reject pending submissions from the app (#/admin)
+-- =====================================================================
+-- Who is an admin: a Supabase Auth user whose id is listed in private.admins. After creating your user
+-- (Authentication > Users > Add user), make yourself admin once, in the SQL editor:
+--   insert into private.admins (user_id) select id from auth.users where email = 'you@example.com';
+create table if not exists private.admins (
+  user_id uuid primary key,
+  note    text
+);
+revoke all on private.admins from public, anon, authenticated;
+
+create or replace function private.is_admin()
+returns boolean
+language sql
+stable
+security definer
+set search_path = ''
+as $$
+  select exists (select 1 from private.admins where user_id = (select auth.uid()));
+$$;
+
+-- Cities and products approved from the dashboard. The app loads them at start-up and adds them to
+-- the built-in lists. Visitors can read them; only admin_review() below can write.
+create table if not exists public.extra_items (
+  id         text primary key check (id ~ '^[a-z0-9]+(-[a-z0-9]+)*$' and char_length(id) <= 60),
+  category   text not null check (category in ('vegetables','fruits','meat','fish','poultry','eggs')),
+  unit       text not null check (unit in ('kg','unit')),
+  name_en    text not null check (char_length(name_en) between 1 and 80),
+  name_fr    text not null check (char_length(name_fr) between 1 and 80),
+  name_ar    text not null check (char_length(name_ar) between 1 and 80),
+  created_at timestamptz not null default now()
+);
+create table if not exists public.extra_cities (
+  id         text primary key check (id ~ '^[a-z0-9]+(-[a-z0-9]+)*$' and char_length(id) <= 60),
+  region     text not null check (char_length(region) between 1 and 60),
+  province   text not null check (char_length(province) between 1 and 60),
+  name_en    text not null check (char_length(name_en) between 1 and 80),
+  name_fr    text not null check (char_length(name_fr) between 1 and 80),
+  name_ar    text not null check (char_length(name_ar) between 1 and 80),
+  created_at timestamptz not null default now()
+);
+alter table public.extra_items  enable row level security;
+alter table public.extra_cities enable row level security;
+drop policy if exists "public read" on public.extra_items;
+drop policy if exists "public read" on public.extra_cities;
+create policy "public read" on public.extra_items  for select using (true);
+create policy "public read" on public.extra_cities for select using (true);
+revoke all on public.extra_items, public.extra_cities from anon, authenticated;
+grant select on public.extra_items, public.extra_cities to anon, authenticated;
+
+-- Is the signed-in user an admin? (the app uses it to decide whether to show the dashboard)
+create or replace function public.am_i_admin()
+returns boolean
+language sql
+stable
+security definer
+set search_path = ''
+as $$ select private.is_admin(); $$;
+
+create or replace function public.admin_list_pending()
+returns setof public.pending_submissions
+language plpgsql
+stable
+security definer
+set search_path = ''
+as $$
+begin
+  if not private.is_admin() then raise exception 'not_admin'; end if;
+  return query select * from public.pending_submissions where status = 'pending' order by created_at;
+end;
+$$;
+
+-- One call = one decision, all or nothing:
+--   reject  -> marks the row rejected
+--   approve -> (optionally creates the new city / product), inserts the price, marks the row approved
+-- p_city / p_item: an existing id chosen by the admin (a typo of a known place or product).
+-- p_new_city / p_new_item: {id, region, province, name_en, name_fr, name_ar} / {id, category, unit, name_*}.
+create or replace function public.admin_review(
+  p_id uuid,
+  p_action text,
+  p_note text default null,
+  p_city text default null,
+  p_region text default null,
+  p_item text default null,
+  p_category text default null,
+  p_unit text default null,
+  p_neighborhood text default null,
+  p_new_city jsonb default null,
+  p_new_item jsonb default null
+)
+returns void
+language plpgsql
+security definer
+set search_path = ''
+as $$
+declare
+  v_row          public.pending_submissions;
+  v_p            jsonb;
+  v_city         text;
+  v_region       text;
+  v_item         text;
+  v_category     text;
+  v_unit         text;
+  v_neighborhood text;
+begin
+  if not private.is_admin() then raise exception 'not_admin'; end if;
+
+  select * into v_row from public.pending_submissions where id = p_id and status = 'pending' for update;
+  if not found then raise exception 'not_found'; end if;
+
+  if p_action = 'reject' then
+    update public.pending_submissions set status = 'rejected', review_note = left(p_note, 500) where id = p_id;
+    return;
+  end if;
+  if p_action is distinct from 'approve' then raise exception 'bad_action'; end if;
+
+  v_p            := v_row.payload;
+  v_city         := coalesce(p_city, v_p ->> 'city');
+  v_region       := coalesce(p_region, v_p ->> 'region');
+  v_item         := coalesce(p_item, v_p ->> 'item');
+  v_category     := coalesce(p_category, v_p ->> 'category');
+  v_unit         := coalesce(p_unit, v_p ->> 'unit');
+  v_neighborhood := coalesce(nullif(trim(p_neighborhood), ''), v_p ->> 'neighborhood');
+
+  if p_new_city is not null then
+    insert into public.extra_cities (id, region, province, name_en, name_fr, name_ar)
+    values (p_new_city ->> 'id', p_new_city ->> 'region', p_new_city ->> 'province', p_new_city ->> 'name_en',
+            coalesce(nullif(p_new_city ->> 'name_fr', ''), p_new_city ->> 'name_en'),
+            coalesce(nullif(p_new_city ->> 'name_ar', ''), p_new_city ->> 'name_en'));
+    v_city   := p_new_city ->> 'id';
+    v_region := p_new_city ->> 'region';
+  end if;
+
+  if p_new_item is not null then
+    insert into public.extra_items (id, category, unit, name_en, name_fr, name_ar)
+    values (p_new_item ->> 'id', p_new_item ->> 'category', p_new_item ->> 'unit', p_new_item ->> 'name_en',
+            coalesce(nullif(p_new_item ->> 'name_fr', ''), p_new_item ->> 'name_en'),
+            coalesce(nullif(p_new_item ->> 'name_ar', ''), p_new_item ->> 'name_en'));
+    v_item     := p_new_item ->> 'id';
+    v_category := p_new_item ->> 'category';
+  end if;
+
+  if v_city is null or v_item is null then raise exception 'unresolved'; end if;
+
+  -- the admin is not a visitor: no rate limit / duplicate guard (the plausibility check still runs)
+  perform set_config('app.skip_limits', 'on', true);
+
+  insert into public.prices
+    (created_at, region, city, neighborhood, market_type, market_name, category, item, price, unit, rating, comment)
+  values
+    (v_row.created_at, v_region, v_city, v_neighborhood, v_p ->> 'market_type', v_p ->> 'market_name',
+     v_category, v_item, (v_p ->> 'price')::numeric, v_unit, (v_p ->> 'rating')::smallint,
+     nullif(v_p ->> 'comment', ''));
+
+  update public.pending_submissions set status = 'approved', review_note = left(p_note, 500) where id = p_id;
+end;
+$$;
+
+revoke all on function public.am_i_admin() from public, anon;
+revoke all on function public.admin_list_pending() from public, anon;
+revoke all on function public.admin_review(uuid, text, text, text, text, text, text, text, text, jsonb, jsonb) from public, anon;
+grant execute on function public.am_i_admin() to authenticated;
+grant execute on function public.admin_list_pending() to authenticated;
+grant execute on function public.admin_review(uuid, text, text, text, text, text, text, text, text, jsonb, jsonb) to authenticated;
 
 -- =====================================================================
 -- Moderation cheat sheet (run in the SQL editor, never from the app)

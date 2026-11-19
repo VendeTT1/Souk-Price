@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import LangSwitcher from './components/LangSwitcher';
 import Dashboard from './components/Dashboard';
 import Search from './components/Search';
 import AddPriceForm from './components/AddPriceForm';
+import Admin from './components/Admin';
 import { store } from './lib/store';
 import { Analytics } from '@vercel/analytics/react';
 
@@ -14,6 +15,25 @@ export default function App() {
   const [tab, setTab] = useState('dashboard');
   // bump after a successful submit so the other tabs refetch
   const [version, setVersion] = useState(0);
+  // the admin dashboard lives at /#/admin and is not linked from the menu
+  const [isAdminRoute, setIsAdminRoute] = useState(window.location.hash === '#/admin');
+  useEffect(() => {
+    const onHash = () => setIsAdminRoute(window.location.hash === '#/admin');
+    window.addEventListener('hashchange', onHash);
+    return () => window.removeEventListener('hashchange', onHash);
+  }, []);
+
+  if (isAdminRoute) {
+    return (
+      <div className="app">
+        <header className="header">
+          <div className="brand"><h1>{t('app.title')} · admin</h1></div>
+          <a href="#/" className="link-btn">← Back to the site</a>
+        </header>
+        <main><Admin /></main>
+      </div>
+    );
+  }
 
   return (
     <div className="app">

@@ -73,6 +73,21 @@ export const supabaseStore = {
     return data;
   },
 
+  // Cities and products approved from the admin dashboard (tables extra_cities / extra_items).
+  async getExtras() {
+    const [items, cities] = await Promise.all([
+      supabase.from('extra_items').select('*'),
+      supabase.from('extra_cities').select('*'),
+    ]);
+    if (items.error) throw items.error;
+    if (cities.error) throw cities.error;
+    const names = (r) => ({ en: r.name_en, fr: r.name_fr, ar: r.name_ar });
+    return {
+      items: items.data.map((r) => ({ id: r.id, category: r.category, unit: r.unit, names: names(r) })),
+      cities: cities.data.map((r) => ({ id: r.id, region: r.region, province: r.province, names: names(r), neighborhoods: [] })),
+    };
+  },
+
   async getSummary(minEntries) {
     const { data, error } = await supabase
       .from('price_summary')
